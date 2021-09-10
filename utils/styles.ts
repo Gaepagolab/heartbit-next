@@ -1,4 +1,4 @@
-import { css } from 'styled-components';
+import { css } from "styled-components";
 
 export enum Size {
   SMALL = 1,
@@ -11,25 +11,27 @@ export interface SizeProps {
 }
 
 export const Color = {
-  primary: '#A16EFF', // purple
-  secondary: '#9595BD', // blue
-  long: '#2E7D31', // green
-  short: '#D3302F', // red
-  warning: '#F89C1C', // orange
-  white: '#ffffff', // white
-  black: '#050505', // black
-  textDarkest: '#1C273C',
-  textDark: '#172b4d',
-  textMedium: '#8993a4',
-  textLight: '#e9eef1',
+  primary: "#A16EFF", // purple
+  secondary: "#9595BD", // blue
+  long: "#2E7D31", // green
+  short: "#D3302F", // red
+  warning: "#F89C1C", // orange
+  white: "#ffffff", // white
+  black: "#050505", // black
+  textDarkest: "#1C273C",
+  textDark: "#172b4d",
+  textMedium: "#8993a4",
+  textLight: "#f0ffff",
 
-  backgroundDark: '#1B1B38',
-  backgroundMedium: '#262A3C',
-  backgroundLight: '#252C38',
-  backgroundModal: '#222222',
+  backgroundDark: "#0C0C12",
+  backgroundMedium: "#262A3C",
+  backgroundLight: "#252C38",
+  backgroundModal: "#222222",
 
-  borderDark: '#1c273c',
-  borderMedium: '#8993a4',
+  borderDark: "#1c273c",
+  borderMedium: "#8993a4",
+
+  transparncy: "rgba(0, 0, 0, 0.4)",
 };
 
 export const font = {
@@ -53,8 +55,8 @@ export const textSizeDefault: number = 16;
 export const textSizeHeader: number = textSizeDefault * 1.125;
 export const textSizeSecondary: number = textSizeDefault * 0.8125;
 
-export const letterSpacingDefault: string = '-0.5px';
-export const letterSpacingSecondary: string = '-0.2px';
+export const letterSpacingDefault: string = "-0.5px";
+export const letterSpacingSecondary: string = "-0.2px";
 
 export const fontWeightHeader: number = 700;
 export const fontWeightDefault: number = 500;
@@ -124,6 +126,13 @@ export const mixin = {
     &:hover {
       color: ${Color.textDark};
     }
+  `,
+  backgroundImage: (imageURL: string) => css`
+    background-image: url("${imageURL}");
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: ${Color.backgroundDark};
   `,
 };
 

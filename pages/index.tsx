@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FC } from "react";
 import styled from "styled-components";
-import { Row, Col } from "reactstrap";
+import { Row, Col, Dropdown } from "reactstrap";
 
 import { font, fontWeightHeader } from "utils/styles";
 import {
@@ -29,21 +29,21 @@ const IndexPage: FC = () => {
             title="공포 & 탐욕지수 그래프"
             description="공포 & 탐욕지수에 대한 정보를 제공합니다."
           >
-            <IFrame src="https://heartbit-0931.s3.ap-northeast-2.amazonaws.com/fear_and_greed_0821_2.html" />
+            <IFrame src="https://gaepagolab-heartbit.s3.ap-northeast-2.amazonaws.com/fear_and_greed.html" />
           </Panel>
           <Panel
             width="100%"
             title="BTC Pi Cycle"
             description="BTC Pi Cycle에 대한 정보를 제공합니다."
           >
-            <IFrame src="https://heartbit-0931.s3.ap-northeast-2.amazonaws.com/pi_cycle_0821_2.html" />
+            <IFrame src="https://gaepagolab-heartbit.s3.ap-northeast-2.amazonaws.com/pi_cycle.html" />
           </Panel>
           <Panel
             width="100%"
             title="BTC HashRate"
             description="BTC HashRate에 대한 정보를 제공합니다."
           >
-            <IFrame src="https://heartbit-0931.s3.ap-northeast-2.amazonaws.com/hash_rate_0821_2.html" />
+            <IFrame src="https://gaepagolab-heartbit.s3.ap-northeast-2.amazonaws.com/Hash_rate.html" />
           </Panel>
         </Column>
 

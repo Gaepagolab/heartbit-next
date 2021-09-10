@@ -14,6 +14,7 @@ import {
   letterSpacingSecondary,
 } from "utils/styles";
 import { AuthModal } from "components/organisms";
+import { Header, Sidebar } from "components/atoms";
 
 const GlobalStyle = createGlobalStyle(
   {
@@ -24,6 +25,7 @@ const GlobalStyle = createGlobalStyle(
       margin: 0,
       padding: 0,
       boxSizing: "border-box",
+      backgroundColor: Color.backgroundDark,
     },
     "body, input, select, textarea": {
       fontFamily: `'Noto sans KR', sans-serif`,
@@ -47,11 +49,15 @@ const GlobalStyle = createGlobalStyle(
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <RecoilRoot>
-      <GlobalStyle />
-      <Component {...pageProps} />
-      <AuthModal />
-    </RecoilRoot>
+    <>
+      <RecoilRoot>
+        <GlobalStyle />
+        <Sidebar />
+        <Component {...pageProps} />
+        <AuthModal />
+      </RecoilRoot>
+    </>
   );
 }
+
 export default MyApp;

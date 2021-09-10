@@ -23,13 +23,15 @@ const Panel: FC<PanelProps> = ({
 }) => {
   return (
     <Root width={width} height={height} noPadding={noPadding}>
-      {title && (
-        <Header>
-          <Title>{title}</Title>
-          {description && <Description>{description}</Description>}
-        </Header>
-      )}
-      {children}
+      <Overlay>
+        {title && (
+          <Header>
+            <Title>{title}</Title>
+            {description && <Description>{description}</Description>}
+          </Header>
+        )}
+        {children}
+      </Overlay>
     </Root>
   );
 };
@@ -37,8 +39,8 @@ const Panel: FC<PanelProps> = ({
 const Root = styled.div<{ width: string; height?: string; noPadding: boolean }>`
   width: ${(props) => `${props.width}`};
   height: ${(props) => `${props.height}`};
-  background: ${Color.backgroundMedium};
   ${(props) => !props.noPadding && "padding: 20px;"}
+  background-color: ${Color.transparncy};
   border-radius: 8px;
   transition: 0.1s ease-in-out;
   ${mixin.boxShadowMedium}
@@ -48,10 +50,15 @@ const Root = styled.div<{ width: string; height?: string; noPadding: boolean }>`
   }
 `;
 
+const Overlay = styled.div`
+  background-color: transparent;
+`;
+
 const Title = styled.h3`
   ${font.size(18)}
   margin-bottom: 8px;
 `;
+
 const Description = styled.p``;
 
 const Header = styled.div`
