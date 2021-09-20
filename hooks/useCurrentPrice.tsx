@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 
-import { CoinUSDT, CoinType } from 'utils/constants';
+import { CoinUSDT, CoinType } from "utils/constants";
 
 type CurrentType = {
   price: number;
@@ -25,7 +25,7 @@ export const useCurrentPrice = function (coinName: keyof typeof CoinType) {
     return () => {
       if ($ws.current) $ws.current.close();
     };
-  }, []);
+  }, [coinName]);
 
   return current;
 };

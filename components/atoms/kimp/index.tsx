@@ -1,18 +1,13 @@
-import * as React from "react";
 import { FC, useState, useEffect } from "react";
 import styled from "styled-components";
 
-import { Color, font, fontWeightHeader } from "utils/styles";
+import { Color, font, fontWeightHeader, mixin } from "utils/styles";
 import { socketClient } from "utils/client";
 
-export interface KimpProps {
-  kimp: string;
-}
-
-const Kimp: FC<KimpProps> = () => {
+const Kimp: FC = () => {
   const [kimp, setKimp] = useState<number>();
   useEffect(() => {
-    socketClient("kimp").on("message", (data) => {
+    socketClient("kimp").on("message", (data: string) => {
       const obj = JSON.parse(data);
       setKimp(obj.kimp);
     });
@@ -27,21 +22,20 @@ const Kimp: FC<KimpProps> = () => {
 };
 
 const Root = styled.div`
-  display: flex;
+  ${mixin.flexSet()}
   flex-direction: column;
-  text-align: center;
-  width: 96px;
+  height: inherit;
 `;
 
 const Title = styled.div`
-  ${font.size(14)}
+  ${font.size(24)}
   font-weight: ${fontWeightHeader};
   color: ${Color.primary};
 `;
 
 const Percentage = styled.span`
   margin-top: 4px;
-  ${font.size(14)}
+  ${font.size(22)}
   color: ${Color.primary};
 `;
 

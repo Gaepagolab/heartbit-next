@@ -1,4 +1,3 @@
-import * as React from "react";
 import { FC, ReactNode } from "react";
 import styled from "styled-components";
 
@@ -37,12 +36,13 @@ const Panel: FC<PanelProps> = ({
 };
 
 const Root = styled.div<{ width: string; height?: string; noPadding: boolean }>`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
   width: ${(props) => `${props.width}`};
   height: ${(props) => `${props.height}`};
-  ${(props) => !props.noPadding && "padding: 20px;"}
   background-color: ${Color.transparncy};
   border-radius: 8px;
-  transition: 0.1s ease-in-out;
   ${mixin.boxShadowMedium}
 
   &:hover {
@@ -52,17 +52,18 @@ const Root = styled.div<{ width: string; height?: string; noPadding: boolean }>`
 
 const Overlay = styled.div`
   background-color: transparent;
+  height: 100%;
 `;
 
 const Title = styled.h3`
-  ${font.size(18)}
-  margin-bottom: 8px;
+  ${font.size(15)}
+  padding: 20px 20px 8px 20px;
 `;
 
-const Description = styled.p``;
-
-const Header = styled.div`
-  margin-bottom: 20px;
+const Description = styled.p`
+  padding: 0px 20px 8px 20px;
 `;
+
+const Header = styled.div``;
 
 export default Panel;

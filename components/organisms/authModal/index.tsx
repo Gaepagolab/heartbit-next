@@ -1,20 +1,19 @@
-import * as React from 'react';
-import { FC, useState, FormEvent } from 'react';
-import { Row, Col, Form, FormGroup, Label } from 'reactstrap';
+import { FC, useState, FormEvent } from "react";
+import { Row, Col, Form, FormGroup, Label } from "reactstrap";
 
-import { Modal, Button, TextInput } from 'components/atoms';
-import { useAuthModal, useAuthModalAction } from 'hooks/useAuthModalAction';
-import { apiClient } from 'utils/client';
-import styled from 'styled-components';
-import { Color, font } from '../../../utils/styles';
-import GoogleButton from '../googleButton';
+import { Modal, Button, TextInput } from "components/atoms";
+import { useAuthModal, useAuthModalAction } from "hooks/useAuthModalAction";
+import { apiClient } from "utils/client";
+import styled from "styled-components";
+import { Color, font } from "../../../utils/styles";
+import GoogleButton from "../googleButton";
 
 const AuthModal: FC = () => {
   const authModal = useAuthModal();
   const { closeModal, toggleMode } = useAuthModalAction();
 
-  const [email, setEmail] = useState('');
-  const [password] = useState('');
+  const [email, setEmail] = useState("");
+  const [password] = useState("");
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -104,8 +103,8 @@ const AuthModal: FC = () => {
           <h3>환영합니다!</h3>
         </LeftPane>
         <RightPane md={7}>
-          {authModal.mode === 'LOGIN' && loginForm()}
-          {authModal.mode === 'REGISTER' && registerForm()}
+          {authModal.mode === "LOGIN" && loginForm()}
+          {authModal.mode === "REGISTER" && registerForm()}
         </RightPane>
       </Container>
     </Modal>
@@ -154,7 +153,7 @@ const Divder = styled.div`
 
     background-color: ${Color.borderDark};
 
-    content: '';
+    content: "";
   }
 
   ::before {

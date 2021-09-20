@@ -1,8 +1,10 @@
-import type { AppProps } from "next/app";
+import type { AppContext, AppInitialProps, AppProps } from "next/app";
 import "bootstrap/dist/css/bootstrap.css";
 import { normalize } from "styled-normalize";
 import { createGlobalStyle } from "styled-components";
 import { RecoilRoot } from "recoil";
+import { NextComponentType, NextPage } from "next";
+import { ReactElement, ReactNode } from "react";
 
 import {
   textSizeDefault,
@@ -14,7 +16,7 @@ import {
   letterSpacingSecondary,
 } from "utils/styles";
 import { AuthModal } from "components/organisms";
-import { Header, Sidebar } from "components/atoms";
+import { withDefaultLayout } from "../components/organisms/layout/defaultLayout";
 
 const GlobalStyle = createGlobalStyle(
   {
@@ -47,17 +49,27 @@ const GlobalStyle = createGlobalStyle(
   normalize
 );
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <>
-      <RecoilRoot>
-        <GlobalStyle />
-        <Sidebar />
-        <Component {...pageProps} />
-        <AuthModal />
-      </RecoilRoot>
-    </>
-  );
-}
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
 
-export default MyApp;
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+const HeartbitApp: NextComponentType<AppContext, AppInitialProps, AppProps> = ({
+  Component: Page,
+  pageProps,
+}: AppPropsWithLayout) => {
+  const getLayout = Page.getLayout || withDefaultLayout;
+
+  return (
+    <RecoilRoot>
+      <GlobalStyle />
+      {getLayout(<Page {...pageProps} />)}
+      <AuthModal />
+    </RecoilRoot>
+  );
+};
+
+export default HeartbitApp;

@@ -13,8 +13,8 @@ export interface SizeProps {
 export const Color = {
   primary: "#A16EFF", // purple
   secondary: "#9595BD", // blue
-  long: "#2E7D31", // green
-  short: "#D3302F", // red
+  long: "#25A69A", // green
+  short: "#EF5350", // red
   warning: "#F89C1C", // orange
   white: "#ffffff", // white
   black: "#050505", // black
@@ -64,6 +64,7 @@ export const fontWeightSecondary: number = 400;
 
 export const navbarHeight = 64;
 export const sidebarWidth = 248;
+export const foldedSidebarWidth = 24;
 
 export const mixin = {
   boxShadowMedium: css`
@@ -133,6 +134,11 @@ export const mixin = {
     background-repeat: no-repeat;
     background-size: cover;
     background-color: ${Color.backgroundDark};
+  `,
+  flexSet: (justify = "center", align = "center") => css`
+    display: flex;
+    justify-content: ${justify};
+    align-items: ${align};
   `,
 };
 

@@ -1,10 +1,13 @@
-import * as React from 'react';
-import { FC, ReactNode } from 'react';
-import { Modal as StrapModal, ModalProps as StrapModalProps, ModalBody } from 'reactstrap';
-import styled from 'styled-components';
+import { FC, ReactNode } from "react";
+import {
+  Modal as StrapModal,
+  ModalProps as StrapModalProps,
+  ModalBody,
+} from "reactstrap";
+import styled from "styled-components";
 
-import { Color, zIndexValues } from '../../../utils/styles';
-import { MdClose } from 'react-icons/md';
+import { Color, zIndexValues } from "../../../utils/styles";
+import { MdClose } from "react-icons/md";
 
 type ModalProps = {
   children: ReactNode;
