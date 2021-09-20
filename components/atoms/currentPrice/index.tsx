@@ -1,8 +1,8 @@
-import * as React from "react";
 import { FC } from "react";
 import styled from "styled-components";
+import { BsCaretDownFill, BsCaretUpFill } from "react-icons/bs";
 
-import { font, Color, fontWeightHeader } from "utils/styles";
+import { font, Color, fontWeightHeader, mixin, media } from "utils/styles";
 
 export interface CurrentPriceProps {
   coinName: string;
@@ -13,32 +13,35 @@ export interface CurrentPriceProps {
 const CurrentPrice: FC<CurrentPriceProps> = ({ coinName, price, up }) => {
   return (
     <Root>
-      <Name>{coinName}</Name>
+      <Name>{coinName}USD</Name>
       <Price up={up}>
-        {price} <small>USD</small>
+        {up ? <BsCaretUpFill /> : <BsCaretDownFill />}
+        {price}
       </Price>
     </Root>
   );
 };
 
 const Root = styled.div`
-  display: flex;
+  ${mixin.flexSet()}
   flex-direction: column;
-  text-align: center;
-  width: 96px;
-  border-right: 1px solid ${Color.borderMedium};
 `;
 
 const Name = styled.span`
-  ${font.size(14)}
+  ${font.size(24)}
   font-weight: ${fontWeightHeader};
   color: ${Color.textMedium};
 `;
+
 const Price = styled.span<{ up: CurrentPriceProps["up"] }>`
   margin-top: 4px;
-  ${font.size(14)}
+  ${font.size(22)}
   color: ${Color.short};
   ${(props) => props.up && `color: ${Color.long};`}
+
+  > svg {
+    margin-right: 6px;
+  }
 `;
 
 export default CurrentPrice;

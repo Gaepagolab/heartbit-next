@@ -1,9 +1,8 @@
-import * as React from 'react';
-import { FC } from 'react';
-import styled from 'styled-components';
-import { Input, InputProps } from 'reactstrap';
+import { FC } from "react";
+import styled from "styled-components";
+import { Input, InputProps } from "reactstrap";
 
-import { Color } from '../../../utils/styles';
+import { Color } from "../../../utils/styles";
 
 export type TextInputProps = { height?: number } & InputProps;
 

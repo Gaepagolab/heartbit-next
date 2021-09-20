@@ -2,33 +2,48 @@ import { FC } from "react";
 import styled from "styled-components";
 import { NextRouter, useRouter } from "next/dist/client/router";
 
-import { Color, sidebarWidth, font, mixin, zIndexValues } from "utils/styles";
+import {
+  Color,
+  sidebarWidth,
+  font,
+  mixin,
+  zIndexValues,
+  foldedSidebarWidth,
+} from "utils/styles";
 
 type Path = {
   as: string;
   pathname: string;
 };
 
-const Sidebar: FC = () => {
+type SidebarProps = {
+  sidebarOpen: boolean;
+  toggleSidebar: VoidFunction;
+};
+
+const Sidebar: FC<SidebarProps> = ({ sidebarOpen, toggleSidebar }) => {
   const router = useRouter();
 
   return (
-    <Root>
-      <Logo>Heartbit</Logo>
-      <LinkList>
-        {renderMenuItem(router, "Analysis", "analysis", {
-          pathname: "/",
-          as: "/",
-        })}
-        {renderMenuItem(router, "Defi / Cefi", "defi-cefi", {
-          pathname: "/defi-cefi",
-          as: "/defi-cefi",
-        })}
-        {renderMenuItem(router, "AI Report", "ai-report", {
-          pathname: "ai-report",
-          as: "/ai-report",
-        })}
-      </LinkList>
+    <Root open={sidebarOpen}>
+      <Inner>
+        <Logo>Heartbit</Logo>
+        <button onClick={toggleSidebar}>hide</button>
+        <LinkList>
+          {renderMenuItem(router, "Analysis", "analysis", {
+            pathname: "/",
+            as: "/",
+          })}
+          {renderMenuItem(router, "Defi / Cefi", "defi-cefi", {
+            pathname: "/defi-cefi",
+            as: "/defi-cefi",
+          })}
+          {renderMenuItem(router, "AI Report", "ai-report", {
+            pathname: "ai-report",
+            as: "/ai-report",
+          })}
+        </LinkList>
+      </Inner>
     </Root>
   );
 };
@@ -53,7 +68,7 @@ const renderMenuItem = (
   );
 };
 
-const Root = styled.div`
+const Root = styled.nav<{ open: boolean }>`
   position: fixed;
   width: ${sidebarWidth}px;
   height: 100vh;
@@ -61,6 +76,17 @@ const Root = styled.div`
   border-right: 1px solid ${Color.borderDark};
   box-sizing: initial;
   z-index: ${zIndexValues.sidbar};
+  transition: 0.3s ease-in-out;
+  overflow: hidden auto;
+  ${(props) => !props.open && `width: ${foldedSidebarWidth}px;`}
+`;
+
+const Inner = styled.div`
+  position: relative;
+  min-width: ${sidebarWidth}px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 `;
 
 const Logo = styled.div`
