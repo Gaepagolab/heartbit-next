@@ -2,7 +2,7 @@ import { ReactElement, FC, Fragment } from "react";
 import styled from "styled-components";
 
 import useToggle from "hooks/useToggle";
-import { Color, foldedSidebarWidth, mixin, sidebarWidth } from "utils/styles";
+import { Color, foldedSidebarWidth, sidebarWidth } from "utils/styles";
 import { Sidebar } from "components/atoms";
 
 const Layout: FC = ({ children }) => {
@@ -22,7 +22,6 @@ const Page = styled.main<{ folded?: boolean }>`
   margin-left: ${sidebarWidth}px;
   transition: 0.3s ease-in-out;
   background-color: ${Color.backgroundDark};
-  ${mixin.backgroundImage("/assets/images/main_bg.png")}
   ${(props) => props.folded && `margin-left: ${foldedSidebarWidth}px `}
 `;
 

@@ -3,7 +3,7 @@ import Head from "next/head";
 import styled from "styled-components";
 import { Container } from "reactstrap";
 
-import { media } from "utils/styles";
+import { media, mixin } from "utils/styles";
 import {
   HeaderPrices,
   Volatilities,
@@ -88,6 +88,7 @@ const Root = styled(Container)`
   padding: 40px 24px;
   height: 100vh;
   overflow-y: auto;
+  ${mixin.backgroundImage("/assets/images/main_bg.png")}
 `;
 
 const AdWrapper = styled.div`
