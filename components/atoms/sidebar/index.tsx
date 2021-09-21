@@ -10,6 +10,7 @@ import {
   zIndexValues,
   foldedSidebarWidth,
 } from "utils/styles";
+import useOnKeyDown from "../../../hooks/useOnKeyDown";
 
 type Path = {
   as: string;
@@ -23,6 +24,8 @@ type SidebarProps = {
 
 const Sidebar: FC<SidebarProps> = ({ sidebarOpen, toggleSidebar }) => {
   const router = useRouter();
+
+  useOnKeyDown("[", toggleSidebar);
 
   return (
     <Root open={sidebarOpen}>

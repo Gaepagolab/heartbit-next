@@ -3,7 +3,7 @@ import Head from "next/head";
 import styled from "styled-components";
 import { Container } from "reactstrap";
 
-import { media, mixin } from "utils/styles";
+import { media } from "utils/styles";
 import {
   HeaderPrices,
   Volatilities,

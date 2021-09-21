@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { font, Color, mixin } from "utils/styles";
 import { Table, THead, TBody, Panel, Button } from "components/atoms";
 import { socketClient } from "../../../utils/client";
+import { Spinner } from "reactstrap";
 
 export interface VolatilitiesProps {}
 
@@ -43,6 +44,8 @@ const Volatilities: FC<VolatilitiesProps> = ({}) => {
   useEffect(() => {
     socketClient(term).on("message", (data: string) => {
       const obj = JSON.parse(data);
+
+      console.log(obj);
       const { top, down } = obj;
       setTopVolatilities(top);
       setDownVolatilities(down);
@@ -58,48 +61,60 @@ const Volatilities: FC<VolatilitiesProps> = ({}) => {
         renderSelector={renderSelector}
       >
         <Volatility>
-          <Table>
-            <THead>
-              <tr>
-                <th>코인명</th>
-                <th>상승률</th>
-              </tr>
-            </THead>
-            <TBody>
-              {topVolatilities
-                .sort((v1, v2) => v2.price - v1.price)
-                .map((v) => (
-                  <tr key={v.ko}>
-                    <td>{v.ko}</td>
-                    <td style={{ color: Color.long }}>{v.price}%</td>
-                  </tr>
-                ))}
-            </TBody>
-          </Table>
+          {topVolatilities.length === 0 ? (
+            <LoadingWrapper>
+              <Spinner />
+            </LoadingWrapper>
+          ) : (
+            <Table>
+              <THead>
+                <tr>
+                  <th>코인명</th>
+                  <th>상승률</th>
+                </tr>
+              </THead>
+              <TBody>
+                {topVolatilities
+                  .sort((v1, v2) => v2.price - v1.price)
+                  .map((v) => (
+                    <tr key={v.ko}>
+                      <td>{v.ko}</td>
+                      <td style={{ color: Color.long }}>{v.price}%</td>
+                    </tr>
+                  ))}
+              </TBody>
+            </Table>
+          )}
         </Volatility>
 
         <Divider />
 
         <Volatility>
           <Title>가격 변동성 하락 Top 5 (업비트 기준)</Title>
-          <Table>
-            <THead>
-              <tr>
-                <th>코인명</th>
-                <th>하락률</th>
-              </tr>
-            </THead>
-            <TBody>
-              {downVolatilities
-                .sort((v1, v2) => v1.price - v2.price)
-                .map((v) => (
-                  <tr key={v.ko}>
-                    <td>{v.ko}</td>
-                    <td style={{ color: Color.short }}>{v.price}%</td>
-                  </tr>
-                ))}
-            </TBody>
-          </Table>
+          {downVolatilities.length === 0 ? (
+            <LoadingWrapper>
+              <Spinner />
+            </LoadingWrapper>
+          ) : (
+            <Table>
+              <THead>
+                <tr>
+                  <th>코인명</th>
+                  <th>하락률</th>
+                </tr>
+              </THead>
+              <TBody>
+                {downVolatilities
+                  .sort((v1, v2) => v1.price - v2.price)
+                  .map((v) => (
+                    <tr key={v.ko}>
+                      <td>{v.ko}</td>
+                      <td style={{ color: Color.short }}>{v.price}%</td>
+                    </tr>
+                  ))}
+              </TBody>
+            </Table>
+          )}
         </Volatility>
       </Panel>
     </Root>
@@ -114,6 +129,7 @@ const Root = styled.div`
 
 const Volatility = styled.div`
   padding: 0 18px;
+  min-height: 40%;
   ${font.size(12)};
 `;
 
@@ -133,6 +149,14 @@ const Selector = styled.div`
   ${font.size(12)}
   &> button + button {
     margin-left: 4px;
+  }
+`;
+
+const LoadingWrapper = styled.div`
+  height: 180px;
+  ${mixin.flexSet()}
+  span {
+    display: none;
   }
 `;
 
