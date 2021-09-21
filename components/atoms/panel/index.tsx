@@ -10,6 +10,7 @@ export interface PanelProps {
   title?: string;
   description?: string;
   noPadding?: boolean;
+  renderSelector?: () => ReactNode;
 }
 
 const Panel: FC<PanelProps> = ({
@@ -19,6 +20,7 @@ const Panel: FC<PanelProps> = ({
   description,
   noPadding = false,
   children,
+  renderSelector,
 }) => {
   return (
     <Root width={width} height={height} noPadding={noPadding}>
@@ -27,6 +29,7 @@ const Panel: FC<PanelProps> = ({
           <Header>
             <Title>{title}</Title>
             {description && <Description>{description}</Description>}
+            {renderSelector && <Selector>{renderSelector()}</Selector>}
           </Header>
         )}
         {children}
@@ -65,5 +68,10 @@ const Description = styled.p`
 `;
 
 const Header = styled.div``;
+
+const Selector = styled.div`
+  padding: 0 20px 8px 20px;
+  ${mixin.flexSet("flex-end")}
+`;
 
 export default Panel;

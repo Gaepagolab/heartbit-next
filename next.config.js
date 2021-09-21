@@ -1,17 +1,38 @@
-require("dotenv").config();
-const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
+});
 
-module.exports = {
-  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    // Important: return the modified config
-    return config;
+module.exports = withBundleAnalyzer({
+  target: "serverless",
+  env: {
+    SOCKET_SERVER_ENDPOINT: process.env.SOCKET_SERVER_ENDPOINT,
   },
-  async rewrites() {
-    return [
-      {
-        source: "/:path*",
-        destination: `http://115.145.12.190:5000/:path*`,
-      },
-    ];
+
+  webpack(conf) {
+    conf.module.rules.push({
+      test: /\.svg$/,
+      use: [
+        {
+          loader: "@svgr/webpack",
+          options: {
+            svgoConfig: {
+              plugins: [
+                {
+                  // Enable figma's wrong mask-type attribute work
+                  removeRasterImages: false,
+                  removeStyleElement: false,
+                  removeUnknownsAndDefaults: false,
+                  // Enable svgr's svg to fill the size
+                  removeViewBox: false,
+                },
+              ],
+            },
+          },
+        },
+      ],
+    });
+    // 절대경로
+    conf.resolve.modules.push(__dirname);
+    return conf;
   },
-};
+});

@@ -12,6 +12,7 @@ export interface SizeProps {
 
 export const Color = {
   primary: "#A16EFF", // purple
+  primaryHover: "#803BFE",
   secondary: "#9595BD", // blue
   long: "#25A69A", // green
   short: "#EF5350", // red

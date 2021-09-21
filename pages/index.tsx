@@ -30,9 +30,7 @@ const HomePage: FC = () => {
 
       <SecondRow>
         <Volatilities />
-        <Panel title="실시간 고래 거래체결" width="100%" height="100%">
-          <WhaleTradings />
-        </Panel>
+        <WhaleTradings />
         <Iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_627c9&symbol=UPBIT%3ABTCKRW&interval=1&hidesidetoolbar=0&symboledit=1&saveimage=1&toolbarbg=f1f3f6&studies=RSI%40tv-basicstudies%1F&theme=dark&style=1&timezone=Asia%2FSeoul&studies_overrides=%7B%7D&overrides=%7B%7D&enabled_features=%5B%5D&disabled_features=%5B%5D&locale=kr&utm_source=sigbtc.pro&utm_medium=widget&utm_campaign=chart&utm_term=UPBIT%3ABTCKRW" />
       </SecondRow>
 

@@ -1,8 +1,8 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 
-import { font, Color } from "utils/styles";
-import { Table, THead, TBody, Panel } from "components/atoms";
+import { font, Color, mixin } from "utils/styles";
+import { Table, THead, TBody, Panel, Button } from "components/atoms";
 import { socketClient } from "../../../utils/client";
 
 export interface VolatilitiesProps {}
@@ -12,22 +12,51 @@ type Volatilty = {
   price: number;
 };
 
+const TERM_MAP = {
+  THREE: "three_min_transaction",
+  FIVE: "five_min_transaction",
+};
+
 const Volatilities: FC<VolatilitiesProps> = ({}) => {
   const [topVolatilities, setTopVolatilities] = useState<Volatilty[]>([]);
   const [downVolatilities, setDownVolatilities] = useState<Volatilty[]>([]);
 
+  const [term, setTerm] = useState(TERM_MAP.THREE);
+
+  const renderSelector = () => (
+    <Selector>
+      <Button
+        selected={term === TERM_MAP.THREE}
+        onClick={() => setTerm(TERM_MAP.THREE)}
+      >
+        3 min
+      </Button>
+      <Button
+        selected={term === TERM_MAP.FIVE}
+        onClick={() => setTerm(TERM_MAP.FIVE)}
+      >
+        5 min
+      </Button>
+    </Selector>
+  );
+
   useEffect(() => {
-    socketClient("three_min_transaction").on("message", (data: string) => {
+    socketClient(term).on("message", (data: string) => {
       const obj = JSON.parse(data);
       const { top, down } = obj;
       setTopVolatilities(top);
       setDownVolatilities(down);
     });
-  }, []);
+  }, [term]);
 
   return (
     <Root>
-      <Panel title="가격 변동성 상승 TOP5 (Upbit기준)" width="100%">
+      <Panel
+        width="100%"
+        height="100%"
+        title="가격 변동성 상승 TOP5 (업비트 기준)"
+        renderSelector={renderSelector}
+      >
         <Volatility>
           <Table>
             <THead>
@@ -48,10 +77,11 @@ const Volatilities: FC<VolatilitiesProps> = ({}) => {
             </TBody>
           </Table>
         </Volatility>
-      </Panel>
 
-      <Panel title="가격 변동성 하락 Top 5 (업비트 기준)" width="100%">
+        <Divider />
+
         <Volatility>
+          <Title>가격 변동성 하락 Top 5 (업비트 기준)</Title>
           <Table>
             <THead>
               <tr>
@@ -79,16 +109,31 @@ const Volatilities: FC<VolatilitiesProps> = ({}) => {
 const Root = styled.div`
   width: 100%;
   height: 100%;
-
-  div + div {
-    margin-top: 8px;
-  }
+  min-height: 548px;
 `;
 
 const Volatility = styled.div`
   padding: 0 18px;
-  min-height: 214px;
   ${font.size(12)};
+`;
+
+const Title = styled.div`
+  ${font.size(15)}
+`;
+
+const Divider = styled.div`
+  height: 1px;
+  ${mixin.flexSet()}
+  width: 100%;
+  margin: 2px 0 8px 0;
+  background-color: ${Color.white};
+`;
+
+const Selector = styled.div`
+  ${font.size(12)}
+  &> button + button {
+    margin-left: 4px;
+  }
 `;
 
 export default Volatilities;
