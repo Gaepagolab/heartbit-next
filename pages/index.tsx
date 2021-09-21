@@ -15,7 +15,6 @@ const HomePage: FC = () => {
   return (
     <Fragment>
       <Head>
-        <link rel="preload" href="/assets/images/main_bg.png" as="image" />
         <link rel="preload" href="/assets/images/ad_afreeca.png" as="image" />
         <link rel="preload" href="/assets/images/ad_funding.png" as="image" />
       </Head>
@@ -88,7 +87,6 @@ const Root = styled(Container)`
   padding: 40px 24px;
   height: 100vh;
   overflow-y: auto;
-  ${mixin.backgroundImage("/assets/images/main_bg.png")}
 `;
 
 const AdWrapper = styled.div`
