@@ -10,7 +10,7 @@ import {
   zIndexValues,
   foldedSidebarWidth,
 } from "utils/styles";
-import useOnKeyDown from "../../../hooks/useOnKeyDown";
+import useOnKeyDown from "hooks/useOnKeyDown";
 
 type Path = {
   as: string;
@@ -37,14 +37,8 @@ const Sidebar: FC<SidebarProps> = ({ sidebarOpen, toggleSidebar }) => {
             pathname: "/",
             as: "/",
           })}
-          {renderMenuItem(router, "Defi / Cefi", "defi-cefi", {
-            pathname: "/defi-cefi",
-            as: "/defi-cefi",
-          })}
-          {renderMenuItem(router, "AI Report", "ai-report", {
-            pathname: "ai-report",
-            as: "/ai-report",
-          })}
+          {renderMenuItem(router, "Defi / Cefi", "defi-cefi")}
+          {renderMenuItem(router, "AI Report", "ai-report")}
         </LinkList>
       </Inner>
     </Root>
@@ -55,18 +49,20 @@ const renderMenuItem = (
   router: NextRouter,
   text: string,
   iconType: any,
-  path: Path
+  path?: Path
 ) => {
-  const { pathname, as } = path;
-  const active = router.pathname.includes(path.pathname);
+  const { pathname, as } = path || {};
+  const isImplemented = !!path;
+  const active = router.pathname.includes(path?.pathname);
 
   const onClick = () => {
     router.push({ pathname }, as, { shallow: true });
   };
 
   return (
-    <LinkItem onClick={onClick} active={active}>
+    <LinkItem onClick={onClick} active={active} isImplemented={isImplemented}>
       <LinkText>{text}</LinkText>
+      {!isImplemented && <NotImplemented>준비 중입니다...</NotImplemented>}
     </LinkItem>
   );
 };
@@ -105,21 +101,37 @@ const LinkList = styled.div`
   margin-top: 64px;
 `;
 
-const LinkItem = styled.div<{ active: boolean }>`
+const LinkItem = styled.div<{ active: boolean; isImplemented: boolean }>`
   position: relative;
   display: flex;
   align-items: center;
-  padding: 8px 12px 8px 40px;
   border-radius: 3px;
   margin-bottom: 24px;
   color: ${Color.textLight};
   ${mixin.clickable}
+  ${(props) =>
+    !props.isImplemented
+      ? `cursor: not-allowed;`
+      : `&:hover { background: ${Color.backgroundLight}; }`}
 `;
 
-export const LinkText = styled.div`
-  padding-top: 4px;
-  margin-left: 24px;
+const LinkText = styled.div`
+  padding: 8px 12px 8px 24px;
   ${font.size(18)};
+`;
+
+const NotImplemented = styled.div`
+  position: absolute;
+  display: inline-block;
+  width: ${sidebarWidth}px;
+  padding: 8px 12px 8px 24px;
+  border-radius: 3px;
+  background: ${Color.backgroundMedium};
+  text-transform: uppercase;
+  opacity: 0;
+  ${LinkItem}:hover & {
+    opacity: 1;
+  }
 `;
 
 export default Sidebar;
