@@ -43,7 +43,6 @@ class MyDocument extends Document {
             property="og:description"
             content="실시간 코인 트렌드 및 정보 제공 서비스"
           />
-          <link rel="preload" href="/assets/images/main_bg.png" as="image" />
         </Head>
         <body>
           <Main />

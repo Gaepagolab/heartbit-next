@@ -1,4 +1,5 @@
-import { FC } from "react";
+import { FC, Fragment } from "react";
+import Head from "next/head";
 import styled from "styled-components";
 import { Container } from "reactstrap";
 
@@ -12,67 +13,74 @@ import { Kimp, Panel } from "components/atoms";
 
 const HomePage: FC = () => {
   return (
-    <Root fluid>
-      <FirstRow>
-        <AdWrapper>
-          <AdImage src="/assets/images/ad_afreeca.png" />
-        </AdWrapper>
-        <Panel width="100%" height="100%">
-          <HeaderPrices />
-        </Panel>
-        <Panel width="100%" height="100%">
-          <Kimp />
-        </Panel>
-        <AdWrapper>
-          <AdImage src="/assets/images/ad_funding.png" />
-        </AdWrapper>
-      </FirstRow>
+    <Fragment>
+      <Head>
+        <link rel="preload" href="/assets/images/main_bg.png" as="image" />
+        <link rel="preload" href="/assets/images/ad_afreeca.png" as="image" />
+        <link rel="preload" href="/assets/images/ad_funding.png" as="image" />
+      </Head>
+      <Root fluid>
+        <FirstRow>
+          <AdWrapper>
+            <AdImage src="/assets/images/ad_afreeca.png" />
+          </AdWrapper>
+          <Panel width="100%" height="100%">
+            <HeaderPrices />
+          </Panel>
+          <Panel width="100%" height="100%">
+            <Kimp />
+          </Panel>
+          <AdWrapper>
+            <AdImage src="/assets/images/ad_funding.png" />
+          </AdWrapper>
+        </FirstRow>
 
-      <SecondRow>
-        <Volatilities />
-        <WhaleTradings />
-        <Iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_627c9&symbol=UPBIT%3ABTCKRW&interval=1&hidesidetoolbar=0&symboledit=1&saveimage=1&toolbarbg=f1f3f6&studies=RSI%40tv-basicstudies%1F&theme=dark&style=1&timezone=Asia%2FSeoul&studies_overrides=%7B%7D&overrides=%7B%7D&enabled_features=%5B%5D&disabled_features=%5B%5D&locale=kr&utm_source=sigbtc.pro&utm_medium=widget&utm_campaign=chart&utm_term=UPBIT%3ABTCKRW" />
-      </SecondRow>
+        <SecondRow>
+          <Volatilities />
+          <WhaleTradings />
+          <Iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_627c9&symbol=UPBIT%3ABTCKRW&interval=1&hidesidetoolbar=0&symboledit=1&saveimage=1&toolbarbg=f1f3f6&studies=RSI%40tv-basicstudies%1F&theme=dark&style=1&timezone=Asia%2FSeoul&studies_overrides=%7B%7D&overrides=%7B%7D&enabled_features=%5B%5D&disabled_features=%5B%5D&locale=kr&utm_source=sigbtc.pro&utm_medium=widget&utm_campaign=chart&utm_term=UPBIT%3ABTCKRW" />
+        </SecondRow>
 
-      <ThirdRow>
-        <Panel
-          title="공포 & 탐욕지수 그래프"
-          description="공포 & 탐욕지수에 대한 정보를 제공합니다."
-          width="100%"
-          height="100%"
-        >
-          <Iframe
-            maxHeight={320}
-            src="https://heartbit-gaepago.s3.ap-northeast-2.amazonaws.com/fear_and_greed.html"
-          />
-        </Panel>
-        <Panel
-          title="BTC HashRate"
-          description="BTC HashRate에 대한 정보를 제공합니다."
-          width="100%"
-          height="100%"
-        >
-          <Iframe
-            maxHeight={320}
-            src="https://heartbit-gaepago.s3.ap-northeast-2.amazonaws.com/Hash_rate.html"
-          />
-        </Panel>
-      </ThirdRow>
+        <ThirdRow>
+          <Panel
+            title="공포 & 탐욕지수 그래프"
+            description="공포 & 탐욕지수에 대한 정보를 제공합니다."
+            width="100%"
+            height="100%"
+          >
+            <Iframe
+              maxHeight={320}
+              src="https://heartbit-gaepago.s3.ap-northeast-2.amazonaws.com/fear_and_greed.html"
+            />
+          </Panel>
+          <Panel
+            title="BTC HashRate"
+            description="BTC HashRate에 대한 정보를 제공합니다."
+            width="100%"
+            height="100%"
+          >
+            <Iframe
+              maxHeight={320}
+              src="https://heartbit-gaepago.s3.ap-northeast-2.amazonaws.com/Hash_rate.html"
+            />
+          </Panel>
+        </ThirdRow>
 
-      <ForthRow>
-        <Panel
-          title="Pi Cycle"
-          description="Pi Cycle에 대한 정보를 제공합니다."
-          width="100%"
-          height="100%"
-        >
-          <Iframe
-            maxHeight={320}
-            src="https://heartbit-gaepago.s3.ap-northeast-2.amazonaws.com/pi_cycle.html"
-          />
-        </Panel>
-      </ForthRow>
-    </Root>
+        <ForthRow>
+          <Panel
+            title="Pi Cycle"
+            description="Pi Cycle에 대한 정보를 제공합니다."
+            width="100%"
+            height="100%"
+          >
+            <Iframe
+              maxHeight={320}
+              src="https://heartbit-gaepago.s3.ap-northeast-2.amazonaws.com/pi_cycle.html"
+            />
+          </Panel>
+        </ForthRow>
+      </Root>
+    </Fragment>
   );
 };
 
