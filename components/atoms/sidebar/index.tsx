@@ -31,7 +31,7 @@ const Sidebar: FC<SidebarProps> = ({ sidebarOpen, toggleSidebar }) => {
     <Root open={sidebarOpen}>
       <Inner>
         <Logo>Heartbit</Logo>
-        {/* <button onClick={toggleSidebar}>hide</button> */}
+        <button onClick={toggleSidebar}>hide</button>
         <LinkList>
           {renderMenuItem(router, "Analysis", "analysis", {
             pathname: "/",
