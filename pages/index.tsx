@@ -15,6 +15,7 @@ const HomePage: FC = () => {
   return (
     <Fragment>
       <Head>
+        <title>Heartbit</title>
         <link rel="preload" href="/assets/images/ad_afreeca.png" as="image" />
         <link rel="preload" href="/assets/images/ad_funding.png" as="image" />
       </Head>

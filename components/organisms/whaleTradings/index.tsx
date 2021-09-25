@@ -21,7 +21,8 @@ const WHALTE_TYPE_MAP = {
 export interface Props {}
 
 const WhaleTradings: FC<Props> = () => {
-  const [tradings, setTradings] = useState<WhaleType[]>([]);
+  const [BTCtradings, setBTCTradings] = useState<WhaleType[]>([]);
+  const [ETHtradings, setETHTradings] = useState<WhaleType[]>([]);
   const [whaleType, setWhaleType] = useState(WHALTE_TYPE_MAP.BTC);
 
   const renderSelector = () => (
@@ -42,15 +43,26 @@ const WhaleTradings: FC<Props> = () => {
   );
 
   useEffect(() => {
-    socketClient(whaleType).on("message", (data: string) => {
+    socketClient(WHALTE_TYPE_MAP.BTC).on("message", (data: string) => {
       const obj = JSON.parse(data);
 
-      setTradings((prev) => {
+      setBTCTradings((prev) => {
         if (prev.length < 15) return [obj, ...prev];
         else return [obj, ...prev].slice(0, prev.length);
       });
     });
-  }, [whaleType]);
+  }, []);
+
+  useEffect(() => {
+    socketClient(WHALTE_TYPE_MAP.ETH).on("message", (data: string) => {
+      const obj = JSON.parse(data);
+
+      setETHTradings((prev) => {
+        if (prev.length < 15) return [obj, ...prev];
+        else return [obj, ...prev].slice(0, prev.length);
+      });
+    });
+  }, []);
 
   return (
     <Root>
@@ -72,20 +84,39 @@ const WhaleTradings: FC<Props> = () => {
               </th>
             </Tr>
           </THead>
-          <TBody>
-            {tradings.map((trading, index) => (
-              <Tr key={index} type={trading.type}>
-                <td>
-                  {trading.bank}
-                  <TradingType type={trading.type}>
-                    {trading.type === "bid" ? "롱" : "숏"}
-                  </TradingType>
-                </td>
-                <td>{covertToKRW(trading.krw)}원</td>
-                <td>{parseInt(String(trading.usdt))}$</td>
-              </Tr>
-            ))}
-          </TBody>
+          {whaleType === WHALTE_TYPE_MAP.BTC && (
+            <TBody>
+              {BTCtradings.map((trading, index) => (
+                <Tr key={index} type={trading.type}>
+                  <td>
+                    {trading.bank}
+                    <TradingType type={trading.type}>
+                      {trading.type === "bid" ? "롱" : "숏"}
+                    </TradingType>
+                  </td>
+                  <td>{covertToKRW(trading.krw)}원</td>
+                  <td>{parseInt(String(trading.usdt))}$</td>
+                </Tr>
+              ))}
+            </TBody>
+          )}
+
+          {whaleType === WHALTE_TYPE_MAP.ETH && (
+            <TBody>
+              {ETHtradings.map((trading, index) => (
+                <Tr key={index} type={trading.type}>
+                  <td>
+                    {trading.bank}
+                    <TradingType type={trading.type}>
+                      {trading.type === "bid" ? "롱" : "숏"}
+                    </TradingType>
+                  </td>
+                  <td>{covertToKRW(trading.krw)}원</td>
+                  <td>{parseInt(String(trading.usdt))}$</td>
+                </Tr>
+              ))}
+            </TBody>
+          )}
         </Table>
       </Panel>
     </Root>

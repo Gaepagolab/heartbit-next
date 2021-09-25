@@ -44,9 +44,10 @@ const Volatilities: FC<VolatilitiesProps> = ({}) => {
   useEffect(() => {
     socketClient(term).on("message", (data: string) => {
       const obj = JSON.parse(data);
+      const { top, down } = obj;
 
       console.log(obj);
-      const { top, down } = obj;
+
       setTopVolatilities(top);
       setDownVolatilities(down);
     });

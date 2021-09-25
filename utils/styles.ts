@@ -25,7 +25,7 @@ export const Color = {
   textLight: "#f0ffff",
 
   backgroundDark: "#0C0C12",
-  backgroundMedium: "#262A3C",
+  backgroundMedium: "#313557",
   backgroundLight: "#252C38",
   backgroundModal: "#222222",
 
@@ -65,7 +65,7 @@ export const fontWeightSecondary: number = 400;
 
 export const navbarHeight = 64;
 export const sidebarWidth = 248;
-export const foldedSidebarWidth = 24;
+export const foldedSidebarWidth = 16;
 
 export const mixin = {
   boxShadowMedium: css`

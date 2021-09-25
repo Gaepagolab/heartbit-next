@@ -1,6 +1,14 @@
 import { FC } from "react";
 import styled from "styled-components";
 import { NextRouter, useRouter } from "next/dist/client/router";
+import {
+  AiFillFileText,
+  AiOutlineBank,
+  AiOutlineAreaChart,
+  AiOutlineMail,
+  AiFillCopyrightCircle,
+  AiOutlineLeft,
+} from "react-icons/ai";
 
 import {
   Color,
@@ -31,7 +39,11 @@ const Sidebar: FC<SidebarProps> = ({ sidebarOpen, toggleSidebar }) => {
     <Root open={sidebarOpen}>
       <Inner>
         <Logo>Heartbit</Logo>
-        <button onClick={toggleSidebar}>hide</button>
+        <ToggleDiv open={sidebarOpen}>
+          <ToggleButton onClick={toggleSidebar}>
+            <AiOutlineLeft />
+          </ToggleButton>
+        </ToggleDiv>
         <LinkList>
           {renderMenuItem(router, "Analysis", "analysis", {
             pathname: "/",
@@ -40,6 +52,17 @@ const Sidebar: FC<SidebarProps> = ({ sidebarOpen, toggleSidebar }) => {
           {renderMenuItem(router, "Defi / Cefi", "defi-cefi")}
           {renderMenuItem(router, "AI Report", "ai-report")}
         </LinkList>
+
+        <Footer>
+          <FooterItem>
+            <AiOutlineMail />
+            <a href="mailto:gaepago@gmail.com">gaepago@gmail.com</a>
+          </FooterItem>
+          <FooterItem>
+            <AiFillCopyrightCircle />
+            Gaepago Lab
+          </FooterItem>
+        </Footer>
       </Inner>
     </Root>
   );
@@ -54,17 +77,25 @@ const renderMenuItem = (
   const { pathname, as } = path || {};
   const isImplemented = !!path;
   const active = router.pathname.includes(path?.pathname);
+  const $Icon = iconMap[iconType];
 
-  const onClick = () => {
-    router.push({ pathname }, as, { shallow: true });
-  };
+  const onClick = () => router.push({ pathname }, as, { shallow: true });
 
   return (
     <LinkItem onClick={onClick} active={active} isImplemented={isImplemented}>
-      <LinkText>{text}</LinkText>
-      {!isImplemented && <NotImplemented>준비 중입니다...</NotImplemented>}
+      <LinkText>
+        <$Icon />
+        {text}
+      </LinkText>
+      {!isImplemented && <NotImplemented>준비중 입니다...</NotImplemented>}
     </LinkItem>
   );
+};
+
+const iconMap = {
+  analysis: AiOutlineAreaChart,
+  "defi-cefi": AiOutlineBank,
+  "ai-report": AiFillFileText,
 };
 
 const Root = styled.nav<{ open: boolean }>`
@@ -82,6 +113,7 @@ const Root = styled.nav<{ open: boolean }>`
 
 const Inner = styled.div`
   position: relative;
+  height: 100%;
   min-width: ${sidebarWidth}px;
   display: flex;
   flex-direction: column;
@@ -98,13 +130,12 @@ const Logo = styled.div`
 `;
 
 const LinkList = styled.div`
-  margin-top: 64px;
+  margin-top: 32px;
 `;
 
 const LinkItem = styled.div<{ active: boolean; isImplemented: boolean }>`
   position: relative;
-  display: flex;
-  align-items: center;
+  ${mixin.flexSet()}
   border-radius: 3px;
   margin-bottom: 24px;
   color: ${Color.textLight};
@@ -112,25 +143,91 @@ const LinkItem = styled.div<{ active: boolean; isImplemented: boolean }>`
   ${(props) =>
     !props.isImplemented
       ? `cursor: not-allowed;`
-      : `&:hover { background: ${Color.backgroundLight}; }`}
+      : `&:hover { 
+        color: ${Color.primary};
+        background: ${Color.backgroundMedium}
+      }`}
 `;
 
 const LinkText = styled.div`
-  padding: 8px 12px 8px 24px;
+  width: 100%;
+  height: 100%;
+  padding: 8px 24px;
+  ${mixin.flexSet("flex-start")}
   ${font.size(18)};
+
+  > svg {
+    margin-bottom: 4px;
+    margin-right: 12px;
+  }
 `;
 
 const NotImplemented = styled.div`
   position: absolute;
   display: inline-block;
   width: ${sidebarWidth}px;
-  padding: 8px 12px 8px 24px;
+  height: 100%;
+  padding: 8px 24px;
   border-radius: 3px;
   background: ${Color.backgroundMedium};
   text-transform: uppercase;
   opacity: 0;
   ${LinkItem}:hover & {
     opacity: 1;
+  }
+`;
+
+const Footer = styled.div`
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
+  padding: 24px;
+`;
+
+const FooterItem = styled.div`
+  color: ${Color.textMedium};
+  margin-bottom: 8px;
+
+  svg {
+    margin-right: 12px;
+  }
+`;
+
+const ToggleButton = styled.button`
+  position: absolute;
+  top: 24px;
+  right: -8px;
+  z-index: 2;
+  border: 1px solid #ffffff;
+  background-color: ${Color.backgroundMedium};
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  ${mixin.flexSet()}
+  color: #ffffff;
+  ${font.size(20)}
+
+  &:hover {
+    color: ${Color.textDarkest};
+    background-color: ${Color.white};
+  }
+`;
+
+const ToggleDiv = styled.div<{ open: boolean }>`
+  position: fixed;
+  left: ${sidebarWidth}px;
+  height: 100vh;
+  width: 2px;
+  transition: 0.3s ease-in-out;
+  ${(props) => !props.open && `left: ${foldedSidebarWidth}px;`}
+
+  opacity: 0;
+  ${Root}:hover & {
+    opacity: 1;
+  }
+
+  svg {
+    ${(props) => !props.open && `transform: rotate(180deg);`}
   }
 `;
 

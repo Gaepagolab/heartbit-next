@@ -45,6 +45,10 @@ const GlobalStyle = createGlobalStyle(
       margin: "0",
       padding: "0",
     },
+    "a, a:hover": {
+      textDecoration: "none",
+      color: Color.secondary,
+    },
   },
   normalize
 );
