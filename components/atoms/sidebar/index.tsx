@@ -102,12 +102,18 @@ const Root = styled.nav<{ open: boolean }>`
   position: fixed;
   width: ${sidebarWidth}px;
   height: 100vh;
-  background: linear-gradient(180deg, #313557, #1e1e2f);
+  background: linear-gradient(
+    180deg,
+    ${Color.backgroundMedium},
+    ${Color.backgroundDark}
+  );
   border-right: 1px solid ${Color.borderDark};
   box-sizing: initial;
   z-index: ${zIndexValues.sidbar};
   transition: 0.3s ease-in-out;
-  overflow: hidden auto;
+  white-space: nowrap;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
   ${(props) => !props.open && `width: ${foldedSidebarWidth}px;`}
 `;
 
