@@ -1,55 +1,72 @@
 import { FC, useState, FormEvent } from "react";
 import { Row, Col, Form, FormGroup, Label } from "reactstrap";
+import styled from "styled-components";
 
-import { Modal, Button, TextInput } from "components/atoms";
+import { Modal, Button, TextInput, Snackbar } from "components/atoms";
 import { useAuthModal, useAuthModalAction } from "hooks/useAuthModalAction";
 import { apiClient } from "utils/client";
-import styled from "styled-components";
-import { Color, font } from "../../../utils/styles";
+import { Color, font } from "utils/styles";
 import GoogleButton from "../googleButton";
+import useInput from "hooks/useInput";
+import AuthEmailForm from "../authEmailForm";
 
 const AuthModal: FC = () => {
   const authModal = useAuthModal();
   const { closeModal, toggleMode } = useAuthModalAction();
+  const [email, changeEmail, resetEmail] = useInput("");
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<"success" | "error">(null);
 
-  const [email, setEmail] = useState("");
-  const [password] = useState("");
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit = async (email: string) => {
     try {
-      const res = await apiClient.post(`/authentication/log-in`, {
+      setLoading(true);
+      await apiClient.post("/email-confirmation/send-verification-link", {
         email,
-        password,
       });
-      console.log(res);
+      setStatus("success");
+      setLoading(false);
     } catch (error) {
+      setStatus("error");
+      setLoading(false);
       console.log(error);
     }
   };
 
+  const onClosed = () => {
+    closeModal();
+    setStatus(null);
+    setLoading(false);
+    setErrors({});
+    resetEmail();
+  };
+
   const loginForm = () => (
-    <Form onSubmit={handleSubmit}>
+    <div>
       <Title>로그인</Title>
       <FormGroup style={{ marginBottom: 16 }}>
         <Label for="email">이메일</Label>
-        <TextInput
-          id="email"
-          placeholder="이메일을 입력하세요."
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </FormGroup>
-      <FormGroup>
-        <ActionButton type="submit" outline variant="primary">
-          이메일 로그인
-        </ActionButton>
+        {status === "success" && (
+          <Snackbar
+            width="100%"
+            type="success"
+            text="회원가입 링크가 이메일로 전송되었습니다."
+          />
+        )}
+        {!status && (
+          <AuthEmailForm
+            value={email}
+            onChange={changeEmail}
+            onSubmit={onSubmit}
+            disabled={false}
+          />
+        )}
       </FormGroup>
       <Divder>or</Divder>
       <FormGroup>
         <GoogleButton
           renderer={(renderProps) => (
-            <ActionButton outline theme="dark" onClick={renderProps.onClick}>
+            <ActionButton size="lg" theme="dark" onClick={renderProps.onClick}>
               Google로 로그인
             </ActionButton>
           )}
@@ -59,52 +76,18 @@ const AuthModal: FC = () => {
       <SmallText>
         아직 회원이 아니신가요? <span onClick={toggleMode}>회원가입</span>
       </SmallText>
-    </Form>
-  );
-
-  const registerForm = () => (
-    <Form onSubmit={handleSubmit}>
-      <Title>회원가입</Title>
-      <FormGroup style={{ marginBottom: 16 }}>
-        <Label for="email">이메일</Label>
-        <TextInput
-          id="email"
-          placeholder="이메일을 입력하세요."
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </FormGroup>
-      <FormGroup>
-        <ActionButton type="submit" outline variant="primary">
-          이메일 회원가입
-        </ActionButton>
-      </FormGroup>
-      <Divder>or</Divder>
-      <FormGroup>
-        <GoogleButton
-          renderer={(renderProps) => (
-            <ActionButton outline theme="dark" onClick={renderProps.onClick}>
-              Google로 회원가입
-            </ActionButton>
-          )}
-        />
-      </FormGroup>
-
-      <SmallText>
-        계정이 이미 있으신가요? <span onClick={toggleMode}>로그인</span>
-      </SmallText>
-    </Form>
+    </div>
   );
 
   return (
-    <Modal size="lg" isOpen={authModal.visible} centered onClosed={closeModal}>
+    <Modal size="lg" isOpen={authModal.visible} centered onClosed={onClosed}>
       <Container>
-        <LeftPane md={5}>
+        <LeftPane sm={12} md={5}>
           <h3>환영합니다!</h3>
         </LeftPane>
-        <RightPane md={7}>
+        <RightPane sm={12} md={7}>
           {authModal.mode === "LOGIN" && loginForm()}
-          {authModal.mode === "REGISTER" && registerForm()}
+          {/* {authModal.mode === "REGISTER" && registerForm()} */}
         </RightPane>
       </Container>
     </Modal>

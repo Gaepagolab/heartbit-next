@@ -1,13 +1,18 @@
-import { ReactElement, FC, Fragment } from "react";
+import { ReactElement, FC, Fragment, useEffect } from "react";
 import Head from "next/head";
 import styled from "styled-components";
 
 import useToggle from "hooks/useToggle";
-import { Color, foldedSidebarWidth, mixin, sidebarWidth } from "utils/styles";
 import { Sidebar } from "components/atoms";
+import { AuthModal } from "components/organisms";
+import { Color, mixin, sidebarWidth, foldedSidebarWidth } from "utils/styles";
+import { useQueryParams } from "../../../hooks/useQueryParams";
+import RegisterModal from "../registerModal";
+import { apiClient } from "../../../utils/client";
 
 const Layout: FC = ({ children }) => {
   const [sidebarOpen, toggleSidebar] = useToggle(true);
+  const registerToken = useQueryParams("registerToken", String);
 
   return (
     <Fragment>
@@ -16,6 +21,8 @@ const Layout: FC = ({ children }) => {
       </Head>
       <Sidebar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
       <Page folded={!sidebarOpen}>{children}</Page>
+      <AuthModal />
+      {!!registerToken && <RegisterModal registerToken={registerToken} />}
     </Fragment>
   );
 };

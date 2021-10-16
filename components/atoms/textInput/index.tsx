@@ -19,8 +19,13 @@ const StyledInput = styled(Input)`
   :focus {
     color: ${Color.white};
     background: ${Color.backgroundLight};
-    border-color: ${Color.borderMedium};
+    /* border-color: ${Color.borderMedium}; */
     outline: none;
+  }
+
+  &:disabled {
+    color: ${Color.textLight};
+    background: ${Color.backgroundDark};
   }
 `;
 

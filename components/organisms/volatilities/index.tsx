@@ -1,10 +1,10 @@
-import { FC, useEffect, useMemo, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import styled from "styled-components";
+import { Spinner } from "reactstrap";
 
 import { font, Color, mixin } from "utils/styles";
 import { Table, THead, TBody, Panel, Button } from "components/atoms";
-import { socketClient } from "../../../utils/client";
-import { Spinner } from "reactstrap";
+import { socketClient } from "utils/client";
 
 export interface VolatilitiesProps {}
 
@@ -45,8 +45,6 @@ const Volatilities: FC<VolatilitiesProps> = ({}) => {
     socketClient(term).on("message", (data: string) => {
       const obj = JSON.parse(data);
       const { top, down } = obj;
-
-      console.log(obj);
 
       setTopVolatilities(top);
       setDownVolatilities(down);
@@ -147,6 +145,7 @@ const Divider = styled.div`
 `;
 
 const Selector = styled.div`
+  display: flex;
   ${font.size(12)}
   &> button + button {
     margin-left: 4px;

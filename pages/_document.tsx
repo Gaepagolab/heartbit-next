@@ -43,6 +43,12 @@ class MyDocument extends Document {
             property="og:description"
             content="실시간 코인 트렌드 및 정보 제공 서비스"
           />
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&display=swap"
+            rel="stylesheet"
+          />
         </Head>
         <body>
           <Main />

@@ -159,6 +159,7 @@ const Tr = styled.tr<{ type?: WhaleType["type"] }>`
 `;
 
 const Selector = styled.div`
+  display: flex;
   ${font.size(12)}
   &> button + button {
     margin-left: 4px;
@@ -167,7 +168,7 @@ const Selector = styled.div`
 
 export default WhaleTradings;
 
-function covertToKRW(number: number) {
+function covertToKRW(number: number): string {
   const inputNumber = number < 0 ? false : number;
   if (!inputNumber) return;
   const unitWords = ["", "만", "억", "조", "경"];

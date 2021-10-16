@@ -1,4 +1,5 @@
-import { css } from "styled-components";
+import { normalize } from "styled-normalize";
+import { createGlobalStyle, css } from "styled-components";
 
 export enum Size {
   SMALL = 1,
@@ -28,6 +29,7 @@ export const Color = {
   backgroundMedium: "#313557",
   backgroundLight: "#252C38",
   backgroundModal: "#222222",
+  backgroundLong: "#C3FAE8",
 
   borderDark: "#1c273c",
   borderMedium: "#8993a4",
@@ -156,3 +158,38 @@ export const media = {
   xsmall: mediaQuery(375),
   custom: mediaQuery,
 };
+
+export const GlobalStyle = createGlobalStyle(
+  {
+    body: {
+      fontSize: textSizeDefault,
+      fontWeight: fontWeightDefault,
+      letterSpacing: letterSpacingDefault,
+      margin: 0,
+      padding: 0,
+      boxSizing: "border-box",
+      backgroundColor: Color.backgroundDark,
+    },
+    "body, input, select, textarea": {
+      fontFamily: `'Noto sans KR', sans-serif`,
+      color: Color.textLight,
+    },
+    "p, span": {
+      margin: "0",
+      padding: "0",
+      fontSize: textSizeSecondary,
+      fontWeight: fontWeightSecondary,
+      color: Color.secondary,
+      letterSpacing: letterSpacingSecondary,
+    },
+    "h1, h2, h3": {
+      margin: "0",
+      padding: "0",
+    },
+    "a, a:hover": {
+      textDecoration: "none",
+      color: Color.secondary,
+    },
+  },
+  normalize
+);

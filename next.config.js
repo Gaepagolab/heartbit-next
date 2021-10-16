@@ -3,7 +3,6 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 });
 
 module.exports = withBundleAnalyzer({
-  target: "serverless",
   env: {
     SOCKET_SERVER_ENDPOINT: process.env.SOCKET_SERVER_ENDPOINT,
   },

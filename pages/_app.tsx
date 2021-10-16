@@ -1,57 +1,11 @@
 import type { AppContext, AppInitialProps, AppProps } from "next/app";
-import "bootstrap/dist/css/bootstrap.css";
-import { normalize } from "styled-normalize";
-import { createGlobalStyle } from "styled-components";
-import { RecoilRoot } from "recoil";
 import { NextComponentType, NextPage } from "next";
 import { ReactElement, ReactNode } from "react";
+import { RecoilRoot } from "recoil";
+import "bootstrap/dist/css/bootstrap.css";
 
-import {
-  textSizeDefault,
-  fontWeightDefault,
-  letterSpacingDefault,
-  Color,
-  textSizeSecondary,
-  fontWeightSecondary,
-  letterSpacingSecondary,
-} from "utils/styles";
-import { AuthModal } from "components/organisms";
-import { withDefaultLayout } from "../components/organisms/layout/defaultLayout";
-
-const GlobalStyle = createGlobalStyle(
-  {
-    body: {
-      fontSize: textSizeDefault,
-      fontWeight: fontWeightDefault,
-      letterSpacing: letterSpacingDefault,
-      margin: 0,
-      padding: 0,
-      boxSizing: "border-box",
-      backgroundColor: Color.backgroundDark,
-    },
-    "body, input, select, textarea": {
-      fontFamily: `'Noto sans KR', sans-serif`,
-      color: Color.textLight,
-    },
-    "p, span": {
-      margin: "0",
-      padding: "0",
-      fontSize: textSizeSecondary,
-      fontWeight: fontWeightSecondary,
-      color: Color.secondary,
-      letterSpacing: letterSpacingSecondary,
-    },
-    "h1, h2, h3": {
-      margin: "0",
-      padding: "0",
-    },
-    "a, a:hover": {
-      textDecoration: "none",
-      color: Color.secondary,
-    },
-  },
-  normalize
-);
+import { withDefaultLayout } from "components/organisms/layout/defaultLayout";
+import { GlobalStyle } from "utils/styles";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -71,7 +25,6 @@ const HeartbitApp: NextComponentType<AppContext, AppInitialProps, AppProps> = ({
     <RecoilRoot>
       <GlobalStyle />
       {getLayout(<Page {...pageProps} />)}
-      <AuthModal />
     </RecoilRoot>
   );
 };

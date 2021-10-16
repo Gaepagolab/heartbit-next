@@ -1,39 +1,55 @@
-import { FC, ReactNode } from "react";
-import {
-  Button as StrapButton,
-  ButtonProps as StrapButtonProps,
-} from "reactstrap";
+import { FC } from "react";
 import styled, { css } from "styled-components";
 
-import { Color } from "utils/styles";
+import { Color, SizeDefault, font, mixin } from "utils/styles";
 
+export type Size = "sm" | "md" | "lg";
 export type Variant = "primary" | "secondary" | "cancel";
-export type ButtonProps = {
-  children: ReactNode;
+export interface ButtonProps
+  extends Omit<React.HTMLProps<HTMLButtonElement>, "size"> {
+  size?: Size;
   variant?: Variant;
+  width?: string | number;
   selected?: boolean;
-} & StrapButtonProps;
+}
 
 const Button: FC<ButtonProps> = ({
   children,
+  size = "sm",
   variant = "primary",
   selected,
-  ...buttonProps
+  width,
+  ...rest
 }) => {
+  const htmlProps = rest as any;
+
   return (
-    <StyledButton {...buttonProps} variant={variant} selected={selected}>
+    <StyledButton
+      {...htmlProps}
+      size={size}
+      variant={variant}
+      selected={selected}
+      css={[{ width }]}
+    >
       {children}
     </StyledButton>
   );
 };
 
-const StyledButton = styled.button<{ variant: Variant; selected: boolean }>`
-  ${(props) => buttonStyles[props.variant]}
+const StyledButton = styled.button<{
+  variant: Variant;
+  size: Size;
+  selected: boolean;
+}>`
+  ${mixin.flexSet()}
   border: none;
   border-radius: 4px;
+
+  ${(props) => buttonVariants[props.variant]}
+  ${(props) => buttonSizes[props.size]}
 `;
 
-const buttonStyles = {
+const buttonVariants = {
   primary: css<{ selected: boolean }>`
     color: ${Color.white};
     background-color: ${Color.primary};
@@ -42,6 +58,24 @@ const buttonStyles = {
       background-color: ${Color.primaryHover};
     }
     ${(props) => props.selected && `background-color: ${Color.primaryHover};`}
+    &:disabled {
+      background-color: black;
+    }
+  `,
+};
+
+const buttonSizes = {
+  sm: css`
+    padding: 2px 6px;
+    ${font.size(SizeDefault * 0.8)}
+  `,
+  md: css`
+    padding: 6px 12px;
+    ${font.size(SizeDefault)}
+  `,
+  lg: css`
+    padding: 8px 16px;
+    ${font.size(SizeDefault * 1.2)}
   `,
 };
 

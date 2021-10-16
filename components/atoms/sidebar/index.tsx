@@ -19,6 +19,8 @@ import {
   foldedSidebarWidth,
 } from "utils/styles";
 import useOnKeyDown from "hooks/useOnKeyDown";
+import { useAuthModalAction } from "hooks/useAuthModalAction";
+import { Button } from "components/atoms";
 
 type Path = {
   as: string;
@@ -32,6 +34,7 @@ type SidebarProps = {
 
 const Sidebar: FC<SidebarProps> = ({ sidebarOpen, toggleSidebar }) => {
   const router = useRouter();
+  const { openModal } = useAuthModalAction();
 
   useOnKeyDown("[", toggleSidebar);
 
@@ -45,15 +48,20 @@ const Sidebar: FC<SidebarProps> = ({ sidebarOpen, toggleSidebar }) => {
           </ToggleButton>
         </ToggleDiv>
         <LinkList>
-          {renderMenuItem(router, "Analysis", "analysis", {
+          {renderMenuItem(router, "트랜드", "analysis", {
             pathname: "/",
             as: "/",
           })}
           {renderMenuItem(router, "Defi / Cefi", "defi-cefi")}
-          {renderMenuItem(router, "AI Report", "ai-report")}
+          {renderMenuItem(router, "AI 리포트", "ai-report")}
         </LinkList>
 
         <Footer>
+          <FooterItem>
+            <Button width="100%" size="lg" onClick={openModal}>
+              로그인
+            </Button>
+          </FooterItem>
           <FooterItem>
             <AiOutlineMail />
             <a href="mailto:gaepago@gmail.com">gaepago@gmail.com</a>
@@ -71,7 +79,7 @@ const Sidebar: FC<SidebarProps> = ({ sidebarOpen, toggleSidebar }) => {
 const renderMenuItem = (
   router: NextRouter,
   text: string,
-  iconType: any,
+  iconType: keyof typeof iconMap,
   path?: Path
 ) => {
   const { pathname, as } = path || {};
@@ -163,7 +171,6 @@ const LinkText = styled.div`
   ${font.size(18)};
 
   > svg {
-    margin-bottom: 4px;
     margin-right: 12px;
   }
 `;
@@ -191,6 +198,7 @@ const Footer = styled.div`
 `;
 
 const FooterItem = styled.div`
+  width: 100%;
   color: ${Color.textMedium};
   margin-bottom: 8px;
 
