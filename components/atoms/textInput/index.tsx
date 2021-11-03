@@ -1,32 +1,44 @@
-import { FC } from "react";
-import styled from "styled-components";
-import { Input, InputProps } from "reactstrap";
+import * as React from "react";
 
-import { Color } from "../../../utils/styles";
+import * as S from "./Styles";
 
-export type TextInputProps = { height?: number } & InputProps;
-
-const TextInput: FC<TextInputProps> = ({ height = 50, ...inputProps }) => {
-  return <StyledInput type="text" style={{ height }} {...inputProps} />;
+const defaultProps = {
+  className: undefined,
+  value: undefined,
+  size: "md" as const,
+  onChange: () => {},
 };
 
-const StyledInput = styled(Input)`
-  background: ${Color.backgroundDark};
-  border-color: ${Color.borderDark};
-  color: ${Color.white};
+type HTMLInputProps = React.DetailedHTMLProps<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  HTMLInputElement
+>;
 
-  &:active,
-  :focus {
-    color: ${Color.white};
-    background: ${Color.backgroundLight};
-    /* border-color: ${Color.borderMedium}; */
-    outline: none;
-  }
+type Size = "xs" | "sm" | "md" | "lg" | "xl";
 
-  &:disabled {
-    color: ${Color.textLight};
-    background: ${Color.backgroundDark};
+export type TextInputProps = Omit<HTMLInputProps, "size"> & {
+  label?: string;
+  error?: string;
+  size?: Size;
+};
+
+const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
+  ({ className, size, error, onChange, ...inputProps }, ref) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (onChange) {
+        onChange(e);
+      }
+    };
+
+    return (
+      <S.Root className={className} size={size}>
+        <S.InputElement {...inputProps} ref={ref} onChange={handleChange} />
+        {error && <S.Error>{error}</S.Error>}
+      </S.Root>
+    );
   }
-`;
+);
+
+TextInput.defaultProps = defaultProps;
 
 export default TextInput;

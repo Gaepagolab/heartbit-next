@@ -20,26 +20,26 @@ const HomePage: FC = () => {
         <link rel="preload" href="/assets/images/ad_funding.png" as="image" />
       </Head>
       <Root fluid>
-        <FirstRow>
+        {/* <FirstRow>
           <AdWrapper>
             <AdImage src="/assets/images/ad_afreeca.png" />
           </AdWrapper>
           <Panel width="100%" height="100%">
-            {/* <HeaderPrices /> */}
+            <HeaderPrices />
           </Panel>
           <Panel width="100%" height="100%">
-            {/* <Kimp /> */}
+            <Kimp />
           </Panel>
           <AdWrapper>
             <AdImage src="/assets/images/ad_funding.png" />
           </AdWrapper>
-        </FirstRow>
+        </FirstRow> */}
 
-        <SecondRow>
-          {/* <Volatilities /> */}
-          {/* <WhaleTradings /> */}
+        {/* <SecondRow>
+          <Volatilities />
+          <WhaleTradings />
           <Iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_627c9&symbol=UPBIT%3ABTCKRW&interval=1&hidesidetoolbar=0&symboledit=1&saveimage=1&toolbarbg=f1f3f6&studies=RSI%40tv-basicstudies%1F&theme=dark&style=1&timezone=Asia%2FSeoul&studies_overrides=%7B%7D&overrides=%7B%7D&enabled_features=%5B%5D&disabled_features=%5B%5D&locale=kr&utm_source=sigbtc.pro&utm_medium=widget&utm_campaign=chart&utm_term=UPBIT%3ABTCKRW" />
-        </SecondRow>
+        </SecondRow> */}
 
         <ThirdRow>
           <Panel

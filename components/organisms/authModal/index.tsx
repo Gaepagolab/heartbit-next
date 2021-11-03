@@ -1,14 +1,17 @@
-import { FC, useState, FormEvent } from "react";
-import { Row, Col, Form, FormGroup, Label } from "reactstrap";
+import { FC, useState } from "react";
+import { Row, Col, Label } from "reactstrap";
 import styled from "styled-components";
 
-import { Modal, Button, TextInput, Snackbar } from "components/atoms";
+import { Modal, Button, Snackbar, TextInput } from "components/atoms";
 import { useAuthModal, useAuthModalAction } from "hooks/useAuthModalAction";
-import { apiClient } from "utils/client";
 import { Color, font } from "utils/styles";
 import GoogleButton from "../googleButton";
 import useInput from "hooks/useInput";
 import AuthEmailForm from "../authEmailForm";
+import { sendVerificationEmail, checkEmail } from "../../../api/authenticate";
+
+type LoginState = "beforeLogin" | "logginIn";
+type EmailState = "registered" | "unRegistered";
 
 const AuthModal: FC = () => {
   const authModal = useAuthModal();
@@ -16,20 +19,34 @@ const AuthModal: FC = () => {
   const [email, changeEmail, resetEmail] = useInput("");
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [loginState, setLoginState] = useState<LoginState>("beforeLogin");
+  const [emailState, setEmailState] = useState<EmailState>(null);
   const [status, setStatus] = useState<"success" | "error">(null);
+
+  const sendEmail = async (email: string) => {
+    try {
+      await sendVerificationEmail(email);
+      setStatus("success");
+      setEmailState("unRegistered");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const onSubmit = async (email: string) => {
     try {
       setLoading(true);
-      await apiClient.post("/email-confirmation/send-verification-link", {
-        email,
-      });
-      setStatus("success");
+      const { registered } = await checkEmail(email);
+      if (registered) {
+        setEmailState("registered");
+      } else {
+        await sendEmail(email);
+        setEmailState("unRegistered");
+      }
       setLoading(false);
     } catch (error) {
       setStatus("error");
       setLoading(false);
-      console.log(error);
     }
   };
 
@@ -43,9 +60,32 @@ const AuthModal: FC = () => {
 
   const loginForm = () => (
     <div>
-      <Title>로그인</Title>
-      <FormGroup style={{ marginBottom: 16 }}>
-        <Label for="email">이메일</Label>
+      {loginState === "beforeLogin" && <Title>로그인</Title>}
+      {loginState === "beforeLogin" && (
+        <AuthEmailForm
+          value={email}
+          onChange={changeEmail}
+          onSubmit={onSubmit}
+          disabled={false}
+        />
+      )}
+      {loginState === "beforeLogin" && (
+        <>
+          <Divder>or</Divder>
+          <GoogleButton
+            renderer={(renderProps) => (
+              <ActionButton
+                size="lg"
+                theme="dark"
+                onClick={renderProps.onClick}
+              >
+                Google로 로그인
+              </ActionButton>
+            )}
+          />
+        </>
+      )}
+      <div style={{ marginBottom: 16 }}>
         {status === "success" && (
           <Snackbar
             width="100%"
@@ -53,31 +93,28 @@ const AuthModal: FC = () => {
             text="회원가입 링크가 이메일로 전송되었습니다."
           />
         )}
-        {!status && (
-          <AuthEmailForm
-            value={email}
-            onChange={changeEmail}
-            onSubmit={onSubmit}
-            disabled={false}
+        {status === "error" && (
+          <Snackbar
+            width="100%"
+            type="error"
+            text="서버 에러가 발생하였습니다. 관리자에게 문의하세요"
           />
         )}
-      </FormGroup>
-      <Divder>or</Divder>
-      <FormGroup>
-        <GoogleButton
-          renderer={(renderProps) => (
-            <ActionButton size="lg" theme="dark" onClick={renderProps.onClick}>
-              Google로 로그인
-            </ActionButton>
-          )}
-        />
-      </FormGroup>
-
+      </div>
+      {emailState === "registered" && (
+        <div>
+          <TextInput type="password" placeholder="비밀번호를 입력하세요" />
+        </div>
+      )}
+      {/* 
       <SmallText>
         아직 회원이 아니신가요? <span onClick={toggleMode}>회원가입</span>
-      </SmallText>
+      </SmallText> */}
     </div>
   );
+
+  console.log({ loginState });
+  console.log({ emailState });
 
   return (
     <Modal size="lg" isOpen={authModal.visible} centered onClosed={onClosed}>

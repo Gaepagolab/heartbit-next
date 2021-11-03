@@ -1,18 +1,20 @@
-import { ReactElement, FC, Fragment, useEffect } from "react";
+import { ReactElement, FC, Fragment } from "react";
 import Head from "next/head";
 import styled from "styled-components";
 
-import useToggle from "hooks/useToggle";
 import { Sidebar } from "components/atoms";
 import { AuthModal } from "components/organisms";
-import { Color, mixin, sidebarWidth, foldedSidebarWidth } from "utils/styles";
-import { useQueryParams } from "../../../hooks/useQueryParams";
 import RegisterModal from "../registerModal";
-import { apiClient } from "../../../utils/client";
+import useToggle from "hooks/useToggle";
+import useCheckAuthEffect from "hooks/useCheckAuthEffect";
+import { useQueryParams } from "hooks/useQueryParams";
+import { Color, mixin, sidebarWidth, foldedSidebarWidth } from "utils/styles";
 
 const Layout: FC = ({ children }) => {
   const [sidebarOpen, toggleSidebar] = useToggle(true);
   const registerToken = useQueryParams("registerToken", String);
+
+  useCheckAuthEffect();
 
   return (
     <Fragment>

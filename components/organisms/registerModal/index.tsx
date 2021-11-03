@@ -6,7 +6,8 @@ import { AxiosError } from "axios";
 
 import { Modal } from "components/atoms";
 import { Color } from "utils/styles";
-import { RegisterFormData } from "../registerForm";
+
+import { RegisterFormValues } from "../registerForm";
 import { RegisterForm } from "..";
 import { apiClient } from "utils/client";
 
@@ -19,12 +20,14 @@ const RegisterModal: FC<{ registerToken: string }> = ({ registerToken }) => {
     router.push({ pathname: "/" }, "/", { shallow: true });
   };
 
-  const onSumbit = async (registerForm: RegisterFormData): Promise<void> => {
+  const onSumbit = async (registerForm: RegisterFormValues): Promise<void> => {
     try {
+      const { name, password } = registerForm;
       setLoading(true);
       const { data } = await apiClient.post("/authentication/register", {
-        ...registerForm,
-        token: registerToken,
+        name,
+        password,
+        registerToken,
       });
       onClosed();
       setLoading(false);

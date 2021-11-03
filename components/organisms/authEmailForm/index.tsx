@@ -1,5 +1,7 @@
 import { FC } from "react";
+import { Label } from "reactstrap";
 import styled from "styled-components";
+
 import { TextInput, Button } from "../../atoms";
 
 interface AuthEmailFormProps {
@@ -24,22 +26,28 @@ const AuthEmailForm: FC<AuthEmailFormProps> = ({
         onSubmit(value);
       }}
     >
-      <TextInput value={value} onChange={onChange} />
-      <Button type="submit">로그인</Button>
+      <Label for="email">이메일</Label>
+      <Row>
+        <TextInput value={value} onChange={onChange} />
+        <Button type="submit">로그인</Button>
+      </Row>
     </Root>
   );
 };
 
-const Root = styled.form`
-  width: 100%;
+const Row = styled.div`
   display: flex;
-  height: 3rem;
+  width: 100;
+`;
+
+const Root = styled.form`
   input {
     flex: 1;
     border-top-left-radius: 2px;
     border-bottom-left-radius: 2px;
     padding: 1rem;
     font-size: 1rem;
+    height: 3rem;
 
     border-right: none;
     &::placeholder {
@@ -49,6 +57,7 @@ const Root = styled.form`
   }
   button {
     font-size: 16px;
+    height: 3rem;
     border-top-right-radius: 2px;
     border-bottom-right-radius: 2px;
     width: 6rem;

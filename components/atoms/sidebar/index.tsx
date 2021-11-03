@@ -21,6 +21,8 @@ import {
 import useOnKeyDown from "hooks/useOnKeyDown";
 import { useAuthModalAction } from "hooks/useAuthModalAction";
 import { Button } from "components/atoms";
+import useCurrentUser from "../../../hooks/useCurrentUser";
+import { logout } from "../../../api/authenticate";
 
 type Path = {
   as: string;
@@ -34,6 +36,7 @@ type SidebarProps = {
 
 const Sidebar: FC<SidebarProps> = ({ sidebarOpen, toggleSidebar }) => {
   const router = useRouter();
+  const [currentUser, setCurrentUser] = useCurrentUser();
   const { openModal } = useAuthModalAction();
 
   useOnKeyDown("[", toggleSidebar);
@@ -58,9 +61,25 @@ const Sidebar: FC<SidebarProps> = ({ sidebarOpen, toggleSidebar }) => {
 
         <Footer>
           <FooterItem>
-            <Button width="100%" size="lg" onClick={openModal}>
-              로그인
-            </Button>
+            {currentUser ? (
+              <div>
+                {currentUser.name}
+                <Button
+                  width="100%"
+                  size="lg"
+                  onClick={async () => {
+                    await logout();
+                    setCurrentUser(null);
+                  }}
+                >
+                  로그아웃
+                </Button>
+              </div>
+            ) : (
+              <Button width="100%" size="lg" onClick={openModal}>
+                로그인
+              </Button>
+            )}
           </FooterItem>
           <FooterItem>
             <AiOutlineMail />

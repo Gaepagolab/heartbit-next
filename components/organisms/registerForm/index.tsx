@@ -1,39 +1,80 @@
 import { FC } from "react";
-import { Label } from "reactstrap";
 import styled from "styled-components";
+import * as Yup from "yup";
+import { Field, Form, Formik, FormikHelpers } from "formik";
 
 import { TextInput, Button } from "components/atoms";
-import useInputs from "hooks/useInputs";
+import { regXp } from "utils/regXp";
 
-export type RegisterFormData = {
+export type RegisterFormValues = {
   name: string;
+  password: string;
+  confirmPassword?: string;
 };
 interface RegisterFormProps {
-  onSubmit: (formData: RegisterFormData) => Promise<void>;
+  onSubmit: (formData: RegisterFormValues) => Promise<void>;
   disabled?: boolean;
 }
 
-const RegisterForm: FC<RegisterFormProps> = ({ onSubmit, disabled }) => {
-  const [formData, onChange] = useInputs<RegisterFormData>({ name: "" });
-
+const RegisterForm: FC<RegisterFormProps> = ({ onSubmit }) => {
   return (
-    <Root
-      onSubmit={(e) => {
-        e.preventDefault();
-        onSubmit(formData);
+    <Formik
+      initialValues={{ name: "", password: "", confirmPassword: "" }}
+      validationSchema={Yup.object({
+        name: Yup.string().required(),
+        password: Yup.string()
+          .min(6)
+          .matches(regXp.containLowercase)
+          .matches(regXp.containUpppercase)
+          .matches(regXp.containSpecialCharacter)
+          .required(),
+        confirmPassword: Yup.string()
+          .oneOf([Yup.ref("password"), null], "비밀번호가 일치하지 않습니다.")
+          .required(),
+      })}
+      onSubmit={async (
+        values: RegisterFormValues,
+        { setSubmitting }: FormikHelpers<RegisterFormValues>
+      ) => {
+        onSubmit(values);
+        setSubmitting(false);
       }}
     >
-      <Label for="name">이름</Label>
-      <TextInput
-        name="name"
-        value={formData.name}
-        onChange={onChange}
-        disabled={disabled}
-      />
-      <Button type="submit" disabled={disabled}>
-        회원가입
-      </Button>
-    </Root>
+      {({ isSubmitting, errors, touched }) => (
+        <Form>
+          {/* <S.FieldWrapper> */}
+          <Field
+            name="name"
+            placeholder="Name"
+            disabled={isSubmitting}
+            as={TextInput}
+            error={touched.name && errors.name}
+          />
+          <Field
+            type="password"
+            name="password"
+            placeholder="Password"
+            disabled={isSubmitting}
+            as={TextInput}
+            error={touched.password && errors.password}
+          />
+          {/* </S.FieldWrapper> */}
+          {/* <S.FieldWrapper> */}
+          <Field
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm password"
+            disabled={isSubmitting}
+            as={TextInput}
+            error={touched.confirmPassword && errors.confirmPassword}
+          />
+          {/* </S.FieldWrapper> */}
+          <Button type="submit" disabled={isSubmitting}>
+            Confirm
+          </Button>
+        </Form>
+      )}
+    </Formik>
   );
 };
 
