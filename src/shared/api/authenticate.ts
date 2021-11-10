@@ -1,4 +1,4 @@
-import { User } from "../states/currentUserState";
+import { User } from "../atoms/userState";
 import { apiClient } from "../utils/client";
 
 export const sendVerificationEmail = async (email: string) => {

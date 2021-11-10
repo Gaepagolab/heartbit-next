@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
-import { color, font, mixin } from "shared/utils/styles";
+import { color, font } from "shared/utils/styles";
 
 export default createGlobalStyle`
   html, body, #next {
@@ -9,8 +9,8 @@ export default createGlobalStyle`
   }
 
   body {
-    color: ${color.textMedium};
-    background-color: ${color.grayWhite};
+    color: ${color.textWhite};
+    background-color: ${color.backgroundDarkest};
     -webkit-tap-highlight-color: transparent;
     line-height: 1.2;
     ${font.size(16)}
@@ -82,7 +82,7 @@ export default createGlobalStyle`
     display: none;
   }
   select option {
-    color: ${color.textMedium};
+    color: ${color.textWhite};
   }
 
   p {
@@ -101,5 +101,4 @@ export default createGlobalStyle`
   html {
     touch-action: manipulation;
   }
-
 `;

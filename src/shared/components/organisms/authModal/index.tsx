@@ -1,8 +1,7 @@
 import { FC, useState } from "react";
-import { Row, Col, Label } from "reactstrap";
 import styled from "styled-components";
 
-import { Modal, Button, Snackbar, TextInput } from "shared/components/atoms";
+import { Button, Snackbar, TextInput } from "shared/components/atoms";
 import {
   useAuthModal,
   useAuthModalAction,
@@ -10,11 +9,7 @@ import {
 import { font } from "shared/utils/styles";
 import GoogleButton from "../googleButton";
 import useInput from "shared/hooks/useInput";
-import AuthEmailForm from "../authEmailForm";
-import {
-  sendVerificationEmail,
-  checkEmail,
-} from "../../../../api/authenticate";
+import { sendVerificationEmail, checkEmail } from "../../../api/authenticate";
 
 type LoginState = "beforeLogin" | "logginIn";
 type EmailState = "registered" | "unRegistered";
@@ -68,14 +63,6 @@ const AuthModal: FC = () => {
     <div>
       {loginState === "beforeLogin" && <Title>로그인</Title>}
       {loginState === "beforeLogin" && (
-        <AuthEmailForm
-          value={email}
-          onChange={changeEmail}
-          onSubmit={onSubmit}
-          disabled={false}
-        />
-      )}
-      {loginState === "beforeLogin" && (
         <>
           <Divder>or</Divder>
           <GoogleButton
@@ -119,33 +106,30 @@ const AuthModal: FC = () => {
     </div>
   );
 
-  console.log({ loginState });
-  console.log({ emailState });
-
   return (
-    <Modal size="lg" isOpen={authModal.visible} centered onClosed={onClosed}>
+    <div>
       <Container>
-        <LeftPane sm={12} md={5}>
+        <LeftPane>
           <h3>환영합니다!</h3>
         </LeftPane>
-        <RightPane sm={12} md={7}>
+        <RightPane>
           {authModal.mode === "LOGIN" && loginForm()}
           {/* {authModal.mode === "REGISTER" && registerForm()} */}
         </RightPane>
       </Container>
-    </Modal>
+    </div>
   );
 };
 
-const Container = styled(Row)`
+const Container = styled.div`
   min-height: 400px;
 `;
-const LeftPane = styled(Col)`
+const LeftPane = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
 `;
-const RightPane = styled(Col)`
+const RightPane = styled.div`
   padding: 60px 40px;
 `;
 

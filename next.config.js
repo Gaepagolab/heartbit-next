@@ -7,31 +7,14 @@ module.exports = withBundleAnalyzer({
     SOCKET_SERVER_ENDPOINT: process.env.SOCKET_SERVER_ENDPOINT,
   },
 
-  webpack(conf) {
-    conf.module.rules.push({
+  webpack(config, { dev, webpack }) {
+    config.module.rules.push({
       test: /\.svg$/,
-      use: [
-        {
-          loader: "@svgr/webpack",
-          options: {
-            svgoConfig: {
-              plugins: [
-                {
-                  // Enable figma's wrong mask-type attribute work
-                  removeRasterImages: false,
-                  removeStyleElement: false,
-                  removeUnknownsAndDefaults: false,
-                  // Enable svgr's svg to fill the size
-                  removeViewBox: false,
-                },
-              ],
-            },
-          },
-        },
-      ],
+      use: ['@svgr/webpack', 'url-loader'],
     });
-    // 절대경로
-    conf.resolve.modules.push(__dirname);
-    return conf;
+
+    config.resolve.modules.push(__dirname);
+
+    return config;
   },
 });

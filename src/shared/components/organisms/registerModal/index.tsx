@@ -1,10 +1,7 @@
 import { FC, useState } from "react";
-import { Col, Row } from "reactstrap";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { AxiosError } from "axios";
-
-import { Modal } from "shared/components/atoms";
 
 import { RegisterFormValues } from "../registerForm";
 import { RegisterForm } from "..";
@@ -42,29 +39,29 @@ const RegisterModal: FC<{ registerToken: string }> = ({ registerToken }) => {
   };
 
   return (
-    <Modal isOpen size="lg" centered onClosed={onClosed}>
+    <div>
       <Container>
-        <LeftPane sm={12} md={7}>
+        <LeftPane>
           <RegisterForm onSubmit={onSumbit} disabled={loading} />
           <div>{error}</div>
         </LeftPane>
-        <RightPane sm={12} md={5}>
+        <RightPane>
           <h3>환영합니다!</h3>
         </RightPane>
       </Container>
-    </Modal>
+    </div>
   );
 };
 
-const Container = styled(Row)`
+const Container = styled.div`
   min-height: 400px;
 `;
 
-const LeftPane = styled(Col)`
+const LeftPane = styled.div`
   padding: 60px 40px;
 `;
 
-const RightPane = styled(Col)`
+const RightPane = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;

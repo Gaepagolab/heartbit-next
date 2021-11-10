@@ -1,7 +1,7 @@
 import { FC, ReactNode } from "react";
 import styled from "styled-components";
 
-import { font, mixin } from "../../../utils/styles";
+import { font, mixin } from "shared/utils/styles";
 
 export interface PanelProps {
   children: ReactNode;

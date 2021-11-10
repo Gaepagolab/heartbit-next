@@ -1,35 +1,16 @@
 import { css } from "styled-components";
 
 export const color = {
-  green100: "#e6f7ef",
-  green200: "#c2ead7",
-  green300: "#88d6b2",
-  green400: "#54c694", // primary hover
-  green500: "#0fba7f", // primary, tagBorder active
-  green600: "#05aa73",
-  green700: "#008f60", // primary active
-  green800: "#0f6e60",
-  green900: "#114f53",
-
-  grayWhite: "#ffffff",
-  gray50: "#f9fafe",
-  gray100: "#f2f4f8",
-  gray200: "#dfe3ec",
-  gray300: "#d1d7e7",
-  gray400: "#8f98bb",
-  gray500: "#636E96",
-  gray600: "#48577e",
-  gray700: "#303d5d",
-  gray800: "#1c2742",
-  gray900: "#0c142b",
-
-  red500: "#ED605B",
+  green500: "#54AB87",
+  red500: "#EB5356",
 
   textWhite: "#ffffff",
-  textLightest: "#b8bfd0",
-  textLight: "#858d9e",
-  textMedium: "#1d2024",
-  textLightBlue: "#636E96",
+  textMedum: "#8D97B1",
+  textDarkBlue: "#6C789A",
+  textDark: "#48516C",
+
+  backgroundDarkest: "#0C1117",
+  backgroundDark: "#161E28",
 
   borderDark: "#858d9e",
   borderLightest: "#EBECF1",
@@ -37,8 +18,7 @@ export const color = {
 };
 
 export const size = {
-  navigationWidth: 240,
-  foldednavigationWidth: 16,
+  navigationWidth: 140,
 };
 
 export const zIndexValues = {
@@ -47,10 +27,10 @@ export const zIndexValues = {
 };
 
 export const font = {
-  regular: 'font-family: "InterRegular"; font-weight: normal;',
-  medium: 'font-family: "InterMedium"; font-weight: normal;',
-  bold: 'font-family: "InterBold"; font-weight: normal;',
-  black: 'font-family: "InterBlack"; font-weight: normal;',
+  regular: 'font-family: "NotoSansRegular"; font-weight: normal;',
+  medium: 'font-family: "NotoSansMedium"; font-weight: normal;',
+  bold: 'font-family: "NotoSansBold"; font-weight: normal;',
+  black: 'font-family: "NotoSansBlack"; font-weight: normal;',
   size: (size: number) => `font-size: ${size}px;`,
 };
 
@@ -81,7 +61,7 @@ export const mixin = {
   customScrollbar: ({
     width = 6,
     height = 6,
-    background = color.gray200,
+    background = color.backgroundDark,
   } = {}) => css`
     &::-webkit-scrollbar {
       width: ${width}px;

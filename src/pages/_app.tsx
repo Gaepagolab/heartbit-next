@@ -8,6 +8,7 @@ import BaseStyles from "core/styles/BaseStyles";
 import "core/styles/fontStyles.css";
 
 import recoilInitializer from "shared/atoms/recoilInitializer";
+import withDefaultLayout from "core/layout/withDefaultLayout";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -17,17 +18,17 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
-export default function ZoomableApp({
+export default function HeartbitApp({
   Component: Page,
   pageProps,
 }: AppPropsWithLayout) {
-  const getLayout = Page.getLayout ?? ((page) => page);
+  const getLayout = Page.getLayout || withDefaultLayout;
 
   return (
     <RecoilRoot initializeState={recoilInitializer}>
-      {getLayout(<Page {...pageProps} />)}
       <NormalizeStyles />
       <BaseStyles />
+      {getLayout(<Page {...pageProps} />)}
     </RecoilRoot>
   );
 }

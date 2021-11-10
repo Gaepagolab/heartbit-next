@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import styled from "styled-components";
-import { Spinner } from "reactstrap";
 
 import { font, mixin } from "shared/utils/styles";
 import { Table, THead, TBody, Panel, Button } from "shared/components/atoms";
@@ -61,9 +60,7 @@ const Volatilities: FC<VolatilitiesProps> = ({}) => {
       >
         <Volatility>
           {topVolatilities.length === 0 ? (
-            <LoadingWrapper>
-              <Spinner />
-            </LoadingWrapper>
+            <LoadingWrapper>Loading...</LoadingWrapper>
           ) : (
             <Table>
               <THead>
@@ -91,9 +88,7 @@ const Volatilities: FC<VolatilitiesProps> = ({}) => {
         <Volatility>
           <Title>가격 변동성 하락 Top 5 (업비트 기준)</Title>
           {downVolatilities.length === 0 ? (
-            <LoadingWrapper>
-              <Spinner />
-            </LoadingWrapper>
+            <LoadingWrapper>Loading...</LoadingWrapper>
           ) : (
             <Table>
               <THead>
