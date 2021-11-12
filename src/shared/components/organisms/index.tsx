@@ -1,4 +1,3 @@
-export { default as HeaderPrices } from "./headerPrices";
 export { default as Volatilities } from "./volatilities";
 export { default as WhaleTradings } from "./whaleTradings";
 export { default as AuthModal } from "./authModal";

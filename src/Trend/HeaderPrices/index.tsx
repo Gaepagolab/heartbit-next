@@ -1,9 +1,8 @@
 import { FC } from "react";
-import styled from "styled-components";
 
-import { CurrentPrice } from "shared/components/atoms";
+import CurrentPrice from "./Currentprice";
 import { useCurrentPrice } from "shared/hooks/useCurrentPrice";
-import { media } from "shared/utils/styles";
+import { Root } from "./Styles";
 
 const HeaderPrices: FC = () => {
   const btc = useCurrentPrice("BTC");
@@ -20,18 +19,5 @@ const HeaderPrices: FC = () => {
     </Root>
   );
 };
-
-const Root = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  align-items: center;
-  column-gap: 24px;
-
-  height: inherit;
-
-  ${media.small} {
-    grid-template-columns: 1fr 1fr;
-  }
-`;
 
 export default HeaderPrices;

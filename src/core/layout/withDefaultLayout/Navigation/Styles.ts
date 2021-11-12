@@ -20,7 +20,9 @@ export const Header = styled.div`
   ${mixin.flexSet()}
   height: 64px;
 `;
-export const Body = styled.div``;
+export const Body = styled.div`
+  padding: 24px 0;
+`;
 
 export const Footer = styled.div`
   position: absolute;
