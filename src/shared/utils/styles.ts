@@ -9,6 +9,7 @@ export const color = {
   textDarkBlue: "#6C789A",
   textDark: "#48516C",
 
+  backgroundMedium: "#121821",
   backgroundDarkest: "#0C1117",
   backgroundDark: "#161E28",
 
