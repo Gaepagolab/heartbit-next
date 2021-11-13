@@ -3,6 +3,7 @@ import { css } from "styled-components";
 export const color = {
   green500: "#54AB87",
   red500: "#EB5356",
+  grey500: "#1E2733",
 
   textWhite: "#ffffff",
   textMedum: "#8D97B1",

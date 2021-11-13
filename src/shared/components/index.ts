@@ -6,3 +6,6 @@ export type { PanelProps } from "./Panel";
 
 export { default as Grid } from "./Grid";
 export type { GridProps } from "./Grid";
+
+export { default as ButtonsTab } from "./ButtonsTab";
+export type { ButtonsTabProps } from "./ButtonsTab";
