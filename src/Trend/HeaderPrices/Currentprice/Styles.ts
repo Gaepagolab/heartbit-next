@@ -21,10 +21,14 @@ export const Name = styled.span`
   }
 `;
 
-export const Price = styled.span<{ up: CurrentPriceProps["up"] }>`
+export const Price = styled.span<{
+  up: CurrentPriceProps["up"];
+  empty: boolean;
+}>`
   ${mixin.flexSet()}
   ${font.size(28)}
   color: ${({ up }) => (up ? `${color.green500};` : `${color.red500};`)}
+  ${(props) => props.empty && `color: ${color.textMedum}; important;`}
   > svg {
     margin-left: 4px;
   }

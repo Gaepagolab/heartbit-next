@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import { Icon, IconType } from "shared/components";
-import { Name, Price, Root } from "./Styles";
+import * as S from "./Styles";
 
 export interface CurrentPriceProps {
   coinName: IconType;
@@ -11,17 +11,17 @@ export interface CurrentPriceProps {
 
 const CurrentPrice: FC<CurrentPriceProps> = ({ coinName, price, up }) => {
   return (
-    <Root>
-      <Name>
+    <S.Root>
+      <S.Name>
         <Icon name={coinName} />
         {coinName}USD
-      </Name>
-      <Price up={up}>
+      </S.Name>
+      <S.Price up={up} empty={price === 0}>
         {up ? "+" : "-"}
         {price}
         {up ? <Icon name="arrow_up" /> : <Icon name="arrow_down" />}
-      </Price>
-    </Root>
+      </S.Price>
+    </S.Root>
   );
 };
 
