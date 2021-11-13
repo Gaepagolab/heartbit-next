@@ -4,7 +4,6 @@ import { font, mixin, color } from "shared/utils/styles";
 import { CurrentPriceProps } from ".";
 
 export const Root = styled.div`
-  height: 100%;
   width: 100%;
   ${mixin.flexSet()}
   flex-direction: column;
