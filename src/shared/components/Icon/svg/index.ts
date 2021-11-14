@@ -1,6 +1,6 @@
 import { ReactComponent as BTC } from "./BTC.svg";
 import { ReactComponent as ETH } from "./ETH.svg";
-import { ReactComponent as XRP } from "./EOS.svg";
+import { ReactComponent as XRP } from "./XRP.svg";
 import { ReactComponent as EOS } from "./EOS.svg";
 import { ReactComponent as profile } from "./profile.svg";
 import { ReactComponent as trends } from "./trends.svg";

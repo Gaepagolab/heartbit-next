@@ -1258,6 +1258,11 @@
     "@svgr/plugin-svgo" "^5.5.0"
     loader-utils "^2.0.0"
 
+"@types/coingecko-api@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@types/coingecko-api/-/coingecko-api-1.0.4.tgz#eea642fb4996fee7d340562bfd2eb23136f5d809"
+  integrity sha512-bIIOlBuDMtSX10d01PFjKaDinz4QQFMJ7UqbQYS9EE1+9NypUcKQQXEZVXFWHVQVsZpVSInGYiYw6uXn70dPvg==
+
 "@types/hoist-non-react-statics@*":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz#1124aafe5118cb591977aeb1ceaaed1070eb039f"
@@ -1856,6 +1861,11 @@ caniuse-lite@^1.0.30001254:
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001259.tgz#ae21691d3da9c4be6144403ac40f71d9f6efd790"
   integrity sha512-V7mQTFhjITxuk9zBpI6nYsiTXhcPe05l+364nZjK7MFK/E7ibvYBSAXr4YcA6oPR8j3ZLM/LN+lUqUVAQEUZFg==
 
+ccxt@^1.61.11:
+  version "1.61.11"
+  resolved "https://registry.yarnpkg.com/ccxt/-/ccxt-1.61.11.tgz#91237d2c2586096b84f4013704c0c1548695c2ab"
+  integrity sha512-BSs4LqGR62XicbFFAjDLvZcWf3y5qVDZRY4KxyRKXUa64iQKJj8cjW1f5diRQYi55NPY9RYVBFjeag0dUNSCeQ==
+
 chalk@2.4.2, chalk@^2.0.0, chalk@^2.4.1:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.2.tgz#cd42541677a54333cf541a49108c1432b44c9424"
@@ -1917,6 +1927,11 @@ coa@^2.0.2:
     "@types/q" "^1.5.1"
     chalk "^2.4.1"
     q "^1.1.2"
+
+coingecko-api@^1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/coingecko-api/-/coingecko-api-1.0.10.tgz#ac8694d5999f00727fe55f0078ce2917603076b2"
+  integrity sha512-7YLLC85+daxAw5QlBWoHVBVpJRwoPr4HtwanCr8V/WRjoyHTa1Lb9DQAvv4MDJZHiz4no6HGnDQnddtjV35oRA==
 
 color-convert@^1.9.0:
   version "1.9.3"

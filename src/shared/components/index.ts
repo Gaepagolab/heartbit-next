@@ -9,3 +9,5 @@ export type { GridProps } from "./Grid";
 
 export { default as ButtonsTab } from "./ButtonsTab";
 export type { ButtonsTabProps } from "./ButtonsTab";
+
+export { Table, THead, TBody } from "./Table";

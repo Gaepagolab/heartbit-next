@@ -1,7 +1,6 @@
 export { default as Sidebar } from "./sidebar";
 export { default as Panel } from "./panel";
-export { default as Kimp } from "./kimp";
-export { Table, THead, TBody } from "./table";
+
 export { default as Button } from "./button";
 export { default as Snackbar } from "./snackbar";
 
