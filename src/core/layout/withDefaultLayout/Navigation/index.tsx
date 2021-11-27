@@ -2,7 +2,7 @@ import { FC } from "react";
 import { NextRouter, useRouter } from "next/router";
 import Link from "next/link";
 
-import { Icon, IconType } from "shared/components";
+import { Icon, IconType, Modal } from "shared/components";
 import {
   Header,
   Body,
@@ -13,9 +13,12 @@ import {
   LinkItem,
   LinkText,
 } from "./Styles";
+import { useAuthModalAction } from "shared/hooks/useAuthModalAction";
+import useToggle from "shared/hooks/useToggle";
 
 const Navigation: FC = () => {
   const router = useRouter();
+  const [toggle, setToggle] = useToggle(false);
 
   return (
     <Root>
@@ -29,10 +32,20 @@ const Navigation: FC = () => {
         {renderMenuItem(router, "AI 리포트", "report", "/ai-report")}
       </Body>
       <Footer>
-        <UserArea>
+        <UserArea onClick={setToggle}>
           <Icon name="profile" />
           로그인
         </UserArea>
+        <Modal
+          isOpen={toggle}
+          onClose={setToggle}
+          renderContent={() => <div>hi</div>}
+          renderLink={(modal) => (
+            <div onClick={modal.open}>
+              <div>dfdafafad</div>
+            </div>
+          )}
+        />
       </Footer>
     </Root>
   );

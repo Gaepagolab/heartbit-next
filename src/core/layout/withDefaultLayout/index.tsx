@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import Navigation from "./Navigation";
 import { size } from "shared/utils/styles";
+import { Modal } from "../../../shared/components";
 
 const Layout = ({ children }: { children: ReactElement }) => {
   return (

@@ -6,7 +6,7 @@ export const color = {
   grey500: "#1E2733",
 
   textWhite: "#ffffff",
-  textMedum: "#8D97B1",
+  textMedium: "#8D97B1",
   textDarkBlue: "#6C789A",
   textDark: "#48516C",
 
@@ -97,6 +97,9 @@ export const mixin = {
     overflow-x: hidden;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+  `,
+  boxShadowMedium: css`
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
   `,
 };
 

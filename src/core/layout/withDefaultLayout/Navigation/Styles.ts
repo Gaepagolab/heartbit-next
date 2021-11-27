@@ -4,7 +4,7 @@ import { color, font, mixin, size } from "shared/utils/styles";
 
 const textHover = css`
   &:hover {
-    color: ${color.textMedum};
+    color: ${color.textMedium};
   }
 `;
 
