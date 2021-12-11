@@ -10,6 +10,7 @@ export const color = {
   textDarkBlue: "#6C789A",
   textDark: "#48516C",
 
+  backgroundLight: "#293545",
   backgroundMedium: "#121821",
   backgroundDarkest: "#0C1117",
   backgroundDark: "#161E28",
@@ -24,7 +25,9 @@ export const size = {
 };
 
 export const zIndexValues = {
-  navigation: 2,
+  tab: 2,
+  tabItem: -1,
+  navigation: 100,
   modal: 9999,
 };
 

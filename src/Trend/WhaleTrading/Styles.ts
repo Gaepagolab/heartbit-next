@@ -1,5 +1,5 @@
 import { font } from "shared/utils/styles";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { WhaleType } from ".";
 
@@ -17,6 +17,7 @@ export const TradingType = styled.span<{ type: WhaleType["type"] }>`
 `;
 
 export const Tr = styled.tr<{ type?: WhaleType["type"] }>`
+  ${(props) => trVariants[props.type]}
   th:first-of-type,
   td:first-of-type {
     padding-left: 20px;
@@ -31,3 +32,13 @@ export const Tr = styled.tr<{ type?: WhaleType["type"] }>`
     border-bottom-right-radius: 8px;
   }
 `;
+
+const trVariants = {
+  ask: css`
+    background: #4a7764;
+    opacity: 0.08;
+  `,
+  bid: css`
+    background: #ac3c3e;
+  `,
+};

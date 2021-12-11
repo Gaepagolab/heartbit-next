@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 
-import { color, font, mixin, size } from "shared/utils/styles";
+import { color, font, mixin, size, zIndexValues } from "shared/utils/styles";
+import { Icon } from "../../../../shared/components";
 
 const textHover = css`
   &:hover {
@@ -14,6 +15,7 @@ export const Root = styled.nav`
   left: 0;
   height: 100%;
   width: ${size.navigationWidth}px;
+  z-index: ${zIndexValues.navigation};
 `;
 
 export const Header = styled.div`
@@ -69,4 +71,20 @@ export const UserArea = styled.div`
   > svg {
     margin-bottom: 10px;
   }
+`;
+
+export const ModalTitle = styled.div`
+  ${font.bold}
+  ${font.size(28)}
+`;
+
+export const ModalHeader = styled.div`
+  padding: 40px;
+  ${mixin.flexSet("space-between", "center")}
+`;
+
+export const ModalFooter = styled.div`
+  margin-top: 64px;
+  margin-bottom: 40px;
+  ${mixin.flexSet()}
 `;

@@ -29,27 +29,27 @@ const WhaleTradings: FC<Props> = () => {
   const [ETHtradings, setETHTradings] = useState<WhaleType[]>([]);
   const [whaleType, setWhaleType] = useState(WHALTE_TYPE_MAP.BTC);
 
-  useEffect(() => {
-    socketClient(WHALTE_TYPE_MAP.BTC).on("message", (data: string) => {
-      const obj = JSON.parse(data);
+  // useEffect(() => {
+  //   socketClient(WHALTE_TYPE_MAP.BTC).on("message", (data: string) => {
+  //     const obj = JSON.parse(data);
 
-      setBTCTradings((prev) => {
-        if (prev.length < 15) return [obj, ...prev];
-        else return [obj, ...prev].slice(0, prev.length);
-      });
-    });
-  }, []);
+  //     setBTCTradings((prev) => {
+  //       if (prev.length < 15) return [obj, ...prev];
+  //       else return [obj, ...prev].slice(0, prev.length);
+  //     });
+  //   });
+  // }, []);
 
-  useEffect(() => {
-    socketClient(WHALTE_TYPE_MAP.ETH).on("message", (data: string) => {
-      const obj = JSON.parse(data);
+  // useEffect(() => {
+  //   socketClient(WHALTE_TYPE_MAP.ETH).on("message", (data: string) => {
+  //     const obj = JSON.parse(data);
 
-      setETHTradings((prev) => {
-        if (prev.length < 15) return [obj, ...prev];
-        else return [obj, ...prev].slice(0, prev.length);
-      });
-    });
-  }, []);
+  //     setETHTradings((prev) => {
+  //       if (prev.length < 15) return [obj, ...prev];
+  //       else return [obj, ...prev].slice(0, prev.length);
+  //     });
+  //   });
+  // }, []);
 
   return (
     <Panel

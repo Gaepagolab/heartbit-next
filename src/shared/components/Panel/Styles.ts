@@ -24,7 +24,7 @@ export const Title = styled.h3`
 `;
 
 export const Description = styled.small`
-  color: ${color.textMedum};
+  color: ${color.textMedium};
   ${font.size(13)}
 `;
 

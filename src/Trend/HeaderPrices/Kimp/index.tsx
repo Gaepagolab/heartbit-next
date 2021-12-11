@@ -7,12 +7,12 @@ interface KimpProps {}
 
 const Kimp: FC<KimpProps> = () => {
   const [kimp, setKimp] = useState<number>();
-  useEffect(() => {
-    socketClient("kimp").on("message", (data: string) => {
-      const obj = JSON.parse(data);
-      setKimp(obj.kimp);
-    });
-  }, []);
+  // useEffect(() => {
+  //   socketClient("kimp").on("message", (data: string) => {
+  //     const obj = JSON.parse(data);
+  //     setKimp(obj.kimp);
+  //   });
+  // }, []);
 
   return (
     <S.Root>

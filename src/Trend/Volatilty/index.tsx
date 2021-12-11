@@ -29,12 +29,12 @@ const Volatilty: FC<VolatiltyProps> = ({ type }) => {
   const [topVolatilities, setTopVolatilities] = useState<Volatilty[]>([]);
   const [term, setTerm] = useState(TERM_MAP.THREE);
 
-  useEffect(() => {
-    socketClient(term).on("message", (data: string) => {
-      const obj = JSON.parse(data);
-      setTopVolatilities(obj[type]);
-    });
-  }, [term, type]);
+  // useEffect(() => {
+  //   socketClient(term).on("message", (data: string) => {
+  //     const obj = JSON.parse(data);
+  //     setTopVolatilities(obj[type]);
+  //   });
+  // }, [term, type]);
 
   return (
     <Panel
