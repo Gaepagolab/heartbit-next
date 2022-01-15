@@ -1,8 +1,10 @@
 import { FC, useState, useEffect } from "react";
-
+import { QuoationService } from "node-upbit"; // 1. node-upbit 패키지 import
 import { socketClient } from "shared/utils/client";
 import { ButtonsTab, Panel, Table, THead, TBody } from "shared/components";
 import * as S from "./Styles";
+import { upbit_transaction_three } from "../../shared/api/upbit";
+import { useUpbit } from "../../shared/hooks/useUpbit";
 
 export interface VolatiltyProps {
   type: "top" | "down";
@@ -28,6 +30,7 @@ const tabItems = [
 const Volatilty: FC<VolatiltyProps> = ({ type }) => {
   const [topVolatilities, setTopVolatilities] = useState<Volatilty[]>([]);
   const [term, setTerm] = useState(TERM_MAP.THREE);
+  const upbit = useUpbit();
 
   // useEffect(() => {
   //   socketClient(term).on("message", (data: string) => {
@@ -35,6 +38,12 @@ const Volatilty: FC<VolatiltyProps> = ({ type }) => {
   //     setTopVolatilities(obj[type]);
   //   });
   // }, [term, type]);
+
+  // useEffect(() => {
+  //   upbit_transaction_three().then((res) => {
+  //     // console.log(res);
+  //   });
+  // });
 
   return (
     <Panel

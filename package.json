@@ -16,6 +16,7 @@
     "formik": "^2.2.9",
     "framer-motion": "^5.3.3",
     "next": "11.1.2",
+    "node-upbit": "^1.1.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-google-login": "^5.2.2",
@@ -24,6 +25,8 @@
     "socket.io-client": "2.0.2",
     "styled-components": "^5.3.1",
     "styled-normalize": "^8.0.7",
+    "text-encoding": "^0.7.0",
+    "websocket": "^1.0.34",
     "yup": "^0.32.11"
   },
   "devDependencies": {
@@ -33,6 +36,8 @@
     "@types/react": "17.0.19",
     "@types/react-dom": "^17.0.11",
     "@types/styled-components": "^5.1.14",
+    "@types/text-encoding": "^0.0.36",
+    "@types/websocket": "^1.0.4",
     "babel-plugin-styled-components": "^1.13.2",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.2",
