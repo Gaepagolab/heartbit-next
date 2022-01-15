@@ -1,0 +1,21 @@
+{
+	"name": "BTC_1d.json",
+	"criterion1": {
+		"current_start": "2021-12-22",
+		"current_end": "2022-01-08",
+		"find_start": "2020-02-16",
+		"find_end": "2020-03-02"
+	},
+	"criterion2": {
+		"current_start": "2021-12-24",
+		"current_end": "2022-01-08",
+		"find_start": "2019-09-22",
+		"find_end": "2019-10-08"
+	},
+	"criterion3": {
+		"current_start": "2021-12-21",
+		"current_end": "2022-01-08",
+		"find_start": "2018-05-03",
+		"find_end": "2018-05-19"
+	}
+}

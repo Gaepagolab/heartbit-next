@@ -5,6 +5,11 @@ export const color = {
   red500: "#EB5356",
   grey500: "#1E2733",
 
+  priceUp: "rgb(210, 79, 69)",
+  priceDown: "rgb(18, 97, 196)",
+  priceUpTrans: "rgba(210, 79, 69, 0.5)",
+  priceDownTrans: "rgba(18, 97, 196, 0.5)",
+
   textWhite: "#ffffff",
   textMedum: "#8D97B1",
   textDarkBlue: "#6C789A",
