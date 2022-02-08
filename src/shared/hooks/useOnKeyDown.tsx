@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { KeyCodes } from "shared/utils/constants";
+import { KeyCodes } from "shared/constants/keyCodes";
 
 const useOnKeyDown = (
   keyCode: keyof typeof KeyCodes,

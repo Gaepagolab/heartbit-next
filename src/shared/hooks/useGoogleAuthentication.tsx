@@ -3,15 +3,19 @@ import {
   GoogleLoginResponseOffline,
 } from "react-google-login";
 
-import { apiClient } from "shared/utils/client";
+import { googleLogin } from "../api/authenticate";
+import useCurrentUser from "./useCurrentUser";
 
 function useGoogleAuthentication() {
+  const [_, setUser] = useCurrentUser();
+
   const handleSuccess = async (
     response: GoogleLoginResponse | GoogleLoginResponseOffline
   ) => {
     if ("accessToken" in response) {
-      const accessToken = response.accessToken;
-      await apiClient.post("google-authentication", { token: accessToken });
+      const token = response.accessToken;
+      const user = await googleLogin(token);
+      setUser(user);
     }
   };
 

@@ -1,4 +1,4 @@
-import { User } from "../atoms/userState";
+import { User } from "../types";
 import { apiClient } from "../utils/client";
 
 export const sendVerificationEmail = async (email: string) => {
@@ -23,5 +23,12 @@ export const me = async (): Promise<User> => {
 
 export const logout = async () => {
   const response = await apiClient.post("/authentication/log-out");
+  return response.data;
+};
+
+export const googleLogin = async (token: string) => {
+  const response = await await apiClient.post<User>("google-authentication", {
+    token,
+  });
   return response.data;
 };

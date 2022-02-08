@@ -5,6 +5,8 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 module.exports = withBundleAnalyzer({
   env: {
     SOCKET_SERVER_ENDPOINT: process.env.SOCKET_SERVER_ENDPOINT,
+    GOOGLE_AUTH_CLIENT_ID: process.env.GOOGLE_AUTH_CLIENT_ID,
+    API_SERVER_ENDPOINT: process.env.API_SERVER_ENDPOINT,
   },
 
   webpack(config, { dev, webpack }) {
@@ -18,3 +20,17 @@ module.exports = withBundleAnalyzer({
     return config;
   },
 });
+
+
+// safely ignore recoil warning messages in dev (triggered by HMR)
+function interceptStdout(text) {
+  if (text.includes('Duplicate atom key')) {
+    return '';
+  }
+  return text;
+}
+
+if (process.env.NODE_ENV === 'development') {
+  const intercept = require('intercept-stdout');
+  intercept(interceptStdout);
+}

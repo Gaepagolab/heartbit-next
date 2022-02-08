@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
 
 import { color, font, mixin, size, zIndexValues } from "shared/utils/styles";
-import { Icon } from "../../../../shared/components";
 
 const textHover = css`
   &:hover {
@@ -22,6 +21,7 @@ export const Header = styled.div`
   ${mixin.flexSet()}
   height: 64px;
 `;
+
 export const Body = styled.div`
   padding: 24px 0;
 `;
@@ -61,30 +61,30 @@ export const LinkText = styled.div`
 
 export const UserArea = styled.div`
   height: 88px;
-  ${mixin.flexSet()}
-  flex-direction: column;
   border-radius: 12px;
   background: ${color.backgroundMedium};
   color: ${color.textDark};
   ${mixin.clickable}
   ${textHover}
+`;
+
+export const Login = styled.div<{ active?: boolean }>`
+  width: 100%;
+  height: 100%;
+  ${mixin.flexSet()}
+  flex-direction: column;
+
+  ${(props) =>
+    props.active &&
+    css`
+      color: ${color.textWhite};
+    `}
+
   > svg {
     margin-bottom: 10px;
   }
 `;
 
-export const ModalTitle = styled.div`
-  ${font.bold}
-  ${font.size(28)}
-`;
-
-export const ModalHeader = styled.div`
-  padding: 40px;
-  ${mixin.flexSet("space-between", "center")}
-`;
-
-export const ModalFooter = styled.div`
-  margin-top: 64px;
-  margin-bottom: 40px;
-  ${mixin.flexSet()}
+export const Username = styled.div`
+  ${font.size(14)}
 `;

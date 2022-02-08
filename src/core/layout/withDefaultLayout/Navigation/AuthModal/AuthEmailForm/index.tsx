@@ -2,17 +2,21 @@ import * as Yup from "yup";
 import { Field, Form, Formik, FormikHelpers } from "formik";
 
 import * as S from "./Styles";
-import { Button, Icon, TextInput } from "shared/components";
-import { checkEmail, sendVerificationEmail } from "shared/api/authenticate";
+import { Button, TextInput } from "shared/components";
 
-export type AuthFormValues = {
+import { checkEmail } from "shared/api/authenticate";
+
+export type AuthEmailFormValues = {
   email: string;
 };
 
-const AuthForm = () => {
-  const onSubmit = async (values: AuthFormValues) => {
-    const res = await sendVerificationEmail(values.email);
-    console.log(res);
+const AuthEmailForm = () => {
+  const onSubmit = async ({ email }: AuthEmailFormValues) => {
+    try {
+      await checkEmail(email);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -23,8 +27,8 @@ const AuthForm = () => {
           email: Yup.string().email().required("이메일 형식에 맞지 않습니다."),
         })}
         onSubmit={async (
-          values: AuthFormValues,
-          { setSubmitting }: FormikHelpers<AuthFormValues>
+          values: AuthEmailFormValues,
+          { setSubmitting }: FormikHelpers<AuthEmailFormValues>
         ) => {
           onSubmit(values);
           setSubmitting(false);
@@ -32,7 +36,6 @@ const AuthForm = () => {
       >
         {({ isSubmitting, errors, touched }) => (
           <Form>
-            {/* <S.FieldWrapper> */}
             <Field
               name="email"
               icon="mail"
@@ -46,10 +49,6 @@ const AuthForm = () => {
                 이메일로 계속하기
               </Button>
               <S.Divider />
-              <Button variant="secondary" disabled={isSubmitting} width="100%">
-                <Icon name="google" />
-                Google 로그인
-              </Button>
             </S.Actions>
           </Form>
         )}
@@ -58,4 +57,4 @@ const AuthForm = () => {
   );
 };
 
-export default AuthForm;
+export default AuthEmailForm;

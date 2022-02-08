@@ -1,22 +1,21 @@
 import { FC } from "react";
-import styled from "styled-components";
 import * as Yup from "yup";
 import { Field, Form, Formik, FormikHelpers } from "formik";
 
-import { TextInput, Button } from "shared/components/atoms";
 import { regXp } from "shared/utils/regXp";
+import { TextInput, Button } from "shared/components";
 
 export type RegisterFormValues = {
   name: string;
   password: string;
   confirmPassword?: string;
 };
-interface RegisterFormProps {
+interface AuthRegisterFormProps {
   onSubmit: (formData: RegisterFormValues) => Promise<void>;
   disabled?: boolean;
 }
 
-const RegisterForm: FC<RegisterFormProps> = ({ onSubmit }) => {
+const AuthRegisterForm: FC<AuthRegisterFormProps> = ({ onSubmit }) => {
   return (
     <Formik
       initialValues={{ name: "", password: "", confirmPassword: "" }}
@@ -42,7 +41,6 @@ const RegisterForm: FC<RegisterFormProps> = ({ onSubmit }) => {
     >
       {({ isSubmitting, errors, touched }) => (
         <Form>
-          {/* <S.FieldWrapper> */}
           <Field
             name="name"
             placeholder="Name"
@@ -58,8 +56,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ onSubmit }) => {
             as={TextInput}
             error={touched.password && errors.password}
           />
-          {/* </S.FieldWrapper> */}
-          {/* <S.FieldWrapper> */}
+
           <Field
             type="password"
             name="confirmPassword"
@@ -68,7 +65,6 @@ const RegisterForm: FC<RegisterFormProps> = ({ onSubmit }) => {
             as={TextInput}
             error={touched.confirmPassword && errors.confirmPassword}
           />
-          {/* </S.FieldWrapper> */}
           <Button type="submit" disabled={isSubmitting}>
             Confirm
           </Button>
@@ -78,8 +74,4 @@ const RegisterForm: FC<RegisterFormProps> = ({ onSubmit }) => {
   );
 };
 
-const Root = styled.form`
-  width: 100%;
-`;
-
-export default RegisterForm;
+export default AuthRegisterForm;

@@ -21,5 +21,10 @@ export type { TextInputProps } from "./TextInput";
 
 export { Table, THead, TBody } from "./Table";
 
+export { default as GoogleLogin } from "./GoogleLogin";
+
 export { default as Modal } from "./Modal";
 export { default as ModalProps } from "./Modal";
+
+export { default as MainChart } from "./MainChart";
+export type { MainChartProps } from "./MainChart";

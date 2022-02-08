@@ -6,7 +6,6 @@ export type GridProps = {
   children: ReactNode;
   className?: string;
   column: number;
-  /** 나누고 싶은 비율의 숫자 입력히여 사용합니다. (아직 3개만 가능) */
   fraction?: string;
   gap?: number | string;
 };

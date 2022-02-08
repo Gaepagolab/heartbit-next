@@ -2,7 +2,9 @@ import { FC, useEffect, useState } from "react";
 
 import * as S from "./Styles";
 import { Table, THead, TBody, Panel, ButtonsTab } from "shared/components";
+
 import { socketClient } from "shared/utils/client";
+import { covertToKRW } from "shared/utils/convert";
 
 export type WhaleType = {
   type: "ask" | "bid";
@@ -74,12 +76,7 @@ const WhaleTradings: FC<Props> = () => {
           <TBody>
             {BTCtradings.map((trading, index) => (
               <S.Tr key={index} type={trading.type}>
-                <td>
-                  {trading.bank}
-                  <S.TradingType type={trading.type}>
-                    {trading.type === "bid" ? "롱" : "숏"}
-                  </S.TradingType>
-                </td>
+                <td>{trading.bank.toUpperCase()}</td>
                 <td>{covertToKRW(trading.krw)}원</td>
                 <td>{parseInt(String(trading.usdt))}$</td>
               </S.Tr>
@@ -91,12 +88,7 @@ const WhaleTradings: FC<Props> = () => {
           <TBody>
             {ETHtradings.map((trading, index) => (
               <S.Tr key={index} type={trading.type}>
-                <td>
-                  {trading.bank}
-                  <S.TradingType type={trading.type}>
-                    {trading.type === "bid" ? "롱" : "숏"}
-                  </S.TradingType>
-                </td>
+                <td>{trading.bank.toUpperCase()}</td>
                 <td>{covertToKRW(trading.krw)}원</td>
                 <td>{parseInt(String(trading.usdt))}$</td>
               </S.Tr>
@@ -109,29 +101,3 @@ const WhaleTradings: FC<Props> = () => {
 };
 
 export default WhaleTradings;
-
-function covertToKRW(number: number): string {
-  const inputNumber = number < 0 ? false : number;
-  if (!inputNumber) return;
-  const unitWords = ["", "만", "억", "조", "경"];
-  const splitUnit = 10000;
-  const splitCount = unitWords.length;
-  const resultArray: number[] = [];
-  let resultString = "";
-
-  for (let i = 0; i < splitCount; i++) {
-    let unitResult =
-      (inputNumber % Math.pow(splitUnit, i + 1)) / Math.pow(splitUnit, i);
-    unitResult = Math.floor(unitResult);
-    if (unitResult > 0) {
-      resultArray[i] = unitResult;
-    }
-  }
-
-  for (let i = 0; i < resultArray.length; i++) {
-    if (!resultArray[i]) continue;
-    resultString = String(resultArray[i]) + unitWords[i] + resultString;
-  }
-
-  return resultString;
-}

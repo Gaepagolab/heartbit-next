@@ -1,10 +1,10 @@
 import { useCallback } from "react";
-import { useSetRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 
 import { authModalState } from "shared/atoms/authModalState";
 
-export function useAuthModalAction() {
-  const setAuthModal = useSetRecoilState(authModalState);
+export default function useAuthModal() {
+  const [authModal, setAuthModal] = useRecoilState(authModalState);
 
   const openModal = useCallback(() => {
     setAuthModal((prev) => ({
@@ -28,12 +28,9 @@ export function useAuthModalAction() {
   }, [setAuthModal]);
 
   return {
+    authModal,
     openModal,
     closeModal,
     toggleMode,
   };
-}
-
-export function useAuthModal() {
-  return useRecoilValue(authModalState);
 }

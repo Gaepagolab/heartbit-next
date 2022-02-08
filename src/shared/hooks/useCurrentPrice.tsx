@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-import { CoinUSDT, CoinType } from "shared/utils/constants";
+import { CoinUSDT, CoinType } from "shared/constants/coin";
 
 type CurrentType = {
   price: number;

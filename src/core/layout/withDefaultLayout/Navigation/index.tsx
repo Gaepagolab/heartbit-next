@@ -1,15 +1,27 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import { NextRouter, useRouter } from "next/router";
 import Link from "next/link";
 
 import * as S from "./Styles";
-import { Button, Icon, IconType, Modal } from "shared/components";
-import useToggle from "shared/hooks/useToggle";
-import AuthForm from "./AuthForm";
+import AuthModal from "./AuthModal";
+import { Icon, IconType } from "shared/components";
+
+import useAuthModal from "shared/hooks/useAuthModal";
+import useCurrentUser from "shared/hooks/useCurrentUser";
+
+import { logout } from "shared/api/authenticate";
 
 const Navigation: FC = () => {
   const router = useRouter();
-  const [modalOpen, toggleModal] = useToggle(false);
+  const { openModal } = useAuthModal();
+  const [currentUser, setCurrentUser] = useCurrentUser();
+
+  const isLoggingIn = !!currentUser;
+
+  const handleLogout = async () => {
+    await logout();
+    setCurrentUser(null);
+  };
 
   return (
     <S.Root>
@@ -23,30 +35,21 @@ const Navigation: FC = () => {
         {renderMenuItem(router, "AI 리포트", "report", "/ai-report")}
       </S.Body>
       <S.Footer>
-        <S.UserArea onClick={toggleModal}>
-          <Icon name="profile" />
-          로그인
-        </S.UserArea>
-        <Modal
-          title="로그인"
-          isOpen={modalOpen}
-          onClose={toggleModal}
-          renderContent={({ close }) => (
-            <React.Fragment>
-              <S.ModalHeader>
-                <S.ModalTitle>Login</S.ModalTitle>
-                <Button onClick={close} variant="text">
-                  <Icon name="close" />
-                </Button>
-              </S.ModalHeader>
-              <AuthForm />
-              <S.ModalFooter>
-                <S.Logo>Heartbit</S.Logo>
-              </S.ModalFooter>
-            </React.Fragment>
+        <S.UserArea>
+          {!isLoggingIn ? (
+            <S.Login onClick={openModal}>
+              <Icon name="profile" />
+              로그인
+            </S.Login>
+          ) : (
+            <S.Login onClick={handleLogout} active>
+              <Icon name="profile" />
+              <S.Username>{currentUser?.name}</S.Username>
+            </S.Login>
           )}
-        />
+        </S.UserArea>
       </S.Footer>
+      <AuthModal />
     </S.Root>
   );
 };
@@ -71,4 +74,4 @@ const renderMenuItem = (
   );
 };
 
-export default Navigation;
+export default memo(Navigation);

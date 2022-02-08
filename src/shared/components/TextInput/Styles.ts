@@ -1,10 +1,9 @@
 import styled from "styled-components";
 
-import { font, color } from "shared/utils/styles";
-import { TextInputProps } from ".";
 import { Icon } from "..";
+import { font, color } from "shared/utils/styles";
 
-export const Root = styled.div<{ size: TextInputProps["size"] }>`
+export const Root = styled.div`
   position: relative;
   display: inline-block;
   height: 48px;
@@ -37,7 +36,9 @@ export const InputElement = styled.input<{ hasIcon: boolean }>`
 `;
 
 export const Error = styled.div`
+  margin: 4px;
   text-align: left;
+  ${font.size(12)}
 `;
 
 export const StyledIcon = styled(Icon)`
