@@ -1,5 +1,4 @@
 import { Grid, Panel } from "shared/components";
-import { WhaleTradings } from "../shared/components/organisms";
 
 import * as S from "./Styles";
 import HeaderPrices from "./HeaderPrices";

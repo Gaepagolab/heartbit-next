@@ -9,3 +9,6 @@ export type { GridProps } from "./Grid";
 
 export { default as ButtonsTab } from "./ButtonsTab";
 export type { ButtonsTabProps } from "./ButtonsTab";
+
+export { default as MainChart } from "./MainChart";
+export type { MainChartProps } from "./MainChart";

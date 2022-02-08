@@ -20,6 +20,7 @@ export const Header = styled.div`
   ${mixin.flexSet()}
   height: 64px;
 `;
+
 export const Body = styled.div`
   padding: 24px 0;
 `;
