@@ -1,7 +1,10 @@
 import axios, { AxiosInstance } from "axios";
 import socketio from "socket.io-client";
 
-import { API_SERVER_ENDPOINT, SOCKET_SERVER_ENDPOINT } from "./constants";
+import {
+  API_SERVER_ENDPOINT,
+  SOCKET_SERVER_ENDPOINT,
+} from "shared/constants/env";
 
 export const apiClient: AxiosInstance = axios.create({
   baseURL: API_SERVER_ENDPOINT,

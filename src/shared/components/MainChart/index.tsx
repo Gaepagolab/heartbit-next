@@ -157,7 +157,7 @@ const MainChart = ({ rows, end, start }: MainChartProps) => {
           <XAxis
             showGridLines
             tickLabelFill={color.textWhite}
-            gridLinesStrokeStyle={color.textMedum}
+            gridLinesStrokeStyle={color.textMedium}
           />
           <MouseCoordinateX displayFormat={timeDisplayFormat} />
           <YAxis

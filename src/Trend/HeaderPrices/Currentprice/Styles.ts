@@ -28,7 +28,7 @@ export const Price = styled.span<{
   ${mixin.flexSet()}
   ${font.size(28)}
   color: ${({ up }) => (up ? `${color.green500};` : `${color.red500};`)}
-  ${(props) => props.empty && `color: ${color.textMedum}; important;`}
+  ${(props) => props.empty && `color: ${color.textMedium}; important;`}
   > svg {
     margin-left: 4px;
   }

@@ -3,9 +3,13 @@ import { Fragment, ReactElement } from "react";
 import styled from "styled-components";
 
 import Navigation from "./Navigation";
+
 import { size } from "shared/utils/styles";
+import useCheckAuthEffect from "shared/hooks/useCheckAuthEffect";
 
 const Layout = ({ children }: { children: ReactElement }) => {
+  useCheckAuthEffect();
+
   return (
     <Root>
       <Head>

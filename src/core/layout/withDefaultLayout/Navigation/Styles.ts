@@ -1,10 +1,10 @@
 import styled, { css } from "styled-components";
 
-import { color, font, mixin, size } from "shared/utils/styles";
+import { color, font, mixin, size, zIndexValues } from "shared/utils/styles";
 
 const textHover = css`
   &:hover {
-    color: ${color.textMedum};
+    color: ${color.textMedium};
   }
 `;
 
@@ -14,6 +14,7 @@ export const Root = styled.nav`
   left: 0;
   height: 100%;
   width: ${size.navigationWidth}px;
+  z-index: ${zIndexValues.navigation};
 `;
 
 export const Header = styled.div`
@@ -60,14 +61,30 @@ export const LinkText = styled.div`
 
 export const UserArea = styled.div`
   height: 88px;
-  ${mixin.flexSet()}
-  flex-direction: column;
   border-radius: 12px;
   background: ${color.backgroundMedium};
   color: ${color.textDark};
   ${mixin.clickable}
   ${textHover}
+`;
+
+export const Login = styled.div<{ active?: boolean }>`
+  width: 100%;
+  height: 100%;
+  ${mixin.flexSet()}
+  flex-direction: column;
+
+  ${(props) =>
+    props.active &&
+    css`
+      color: ${color.textWhite};
+    `}
+
   > svg {
     margin-bottom: 10px;
   }
+`;
+
+export const Username = styled.div`
+  ${font.size(14)}
 `;

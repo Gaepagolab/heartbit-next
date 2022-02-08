@@ -11,10 +11,11 @@ export const color = {
   priceDownTrans: "rgba(18, 97, 196, 0.5)",
 
   textWhite: "#ffffff",
-  textMedum: "#8D97B1",
+  textMedium: "#8D97B1",
   textDarkBlue: "#6C789A",
   textDark: "#48516C",
 
+  backgroundLight: "#293545",
   backgroundMedium: "#121821",
   backgroundDarkest: "#0C1117",
   backgroundDark: "#161E28",
@@ -29,7 +30,9 @@ export const size = {
 };
 
 export const zIndexValues = {
-  navigation: 2,
+  tab: 2,
+  tabItem: -1,
+  navigation: 100,
   modal: 9999,
 };
 
@@ -102,6 +105,9 @@ export const mixin = {
     overflow-x: hidden;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+  `,
+  boxShadowMedium: css`
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
   `,
 };
 

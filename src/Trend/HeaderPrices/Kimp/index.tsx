@@ -1,18 +1,29 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 
-import { Root, Title, Percentage, BackgroundText } from "./Styles";
+import * as S from "./Styles";
+import { socketClient } from "shared/utils/client";
 
 interface KimpProps {}
 
 const Kimp: FC<KimpProps> = () => {
+  const [kimp, setKimp] = useState<number>();
+
+  // useEffect(() => {
+  //   socketClient("kimp").on("message", (data: string) => {
+  //     const obj = JSON.parse(data);
+  //     setKimp(obj.kimp);
+  //   });
+  // }, []);
+
   return (
-    <Root>
-      <BackgroundText>H</BackgroundText>
-      <Title>비트코인 김프</Title>
-      <Percentage>
-        1.0443<small>%</small>
-      </Percentage>
-    </Root>
+    <S.Root>
+      <S.BackgroundText>H</S.BackgroundText>
+      <S.Title>비트코인 김프</S.Title>
+      <S.Percentage>
+        {kimp}
+        <small>%</small>
+      </S.Percentage>
+    </S.Root>
   );
 };
 
