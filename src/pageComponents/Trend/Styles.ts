@@ -1,8 +1,5 @@
 import styled from "styled-components";
 
-import { Grid } from "shared/components";
-import { mixin } from "../shared/utils/styles";
-
 export const Root = styled.div`
   padding: 40px 24px;
   height: 100vh;

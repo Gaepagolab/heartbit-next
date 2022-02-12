@@ -33,7 +33,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
     };
 
     return (
-      <S.Root className={className} size={size}>
+      <S.Root className={className}>
         {icon && <S.StyledIcon name={icon} />}
         <S.InputElement
           {...inputProps}

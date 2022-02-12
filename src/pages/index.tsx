@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { Fragment } from "react";
 import Head from "next/head";
 
-import Trend from "Trend";
+import Trend from "pageComponents/Trend";
 
 const TrendPage: NextPage = () => {
   return (
