@@ -14,6 +14,7 @@ export const color = {
   textMedium: "#8D97B1",
   textDarkBlue: "#6C789A",
   textDark: "#48516C",
+  textDarkest: "#161E28",
 
   backgroundLight: "#293545",
   backgroundMedium: "#121821",
