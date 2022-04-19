@@ -49,7 +49,10 @@ const Sidebar: FC<SidebarProps> = ({ sidebarOpen, toggleSidebar }) => {
             pathname: "/",
             as: "/",
           })}
-          {renderMenuItem(router, "Defi / Cefi", "defi-cefi")}
+          {renderMenuItem(router, "Defi / Cefi", "defi-cefi", {
+            pathname: "/finance",
+            as: "/finance"
+          })}
           {renderMenuItem(router, "AI Report", "ai-report")}
         </LinkList>
 
