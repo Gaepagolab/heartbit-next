@@ -7,6 +7,7 @@ import NormalizeStyles from "core/styles/NormalizeStyles";
 import BaseStyles from "core/styles/BaseStyles";
 import "core/styles/fontStyles.css";
 
+import "shared/utils/array";
 import recoilInitializer from "shared/atoms/recoilInitializer";
 import withDefaultLayout from "core/layout/withDefaultLayout";
 
