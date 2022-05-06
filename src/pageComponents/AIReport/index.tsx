@@ -1,12 +1,31 @@
+import { useCallback, useEffect, useState } from "react";
+
 import * as S from "./Styles";
-import { Candle } from "shared/types";
+import { Candle, Coin } from "shared/types";
 import useFetch from "shared/hooks/useFetch";
 import { API_SERVER_ENDPOINT } from "shared/constants/env";
+import ChartComparison from "./ChartComparison";
+import { CoinKR } from "../../shared/constants/coin";
+import CandleSelector from "./CandleSelector";
+
+const PROTOTYPE_COIN = "BTC";
 
 export default function AIReport() {
-  const { data: candles = [], error } = useFetch<Candle[]>(
-    `${API_SERVER_ENDPOINT}/candles?coinId=1`
+  const { data: coin, error } = useFetch<Coin>(
+    `${API_SERVER_ENDPOINT}/coins/${PROTOTYPE_COIN}`
   );
+
+  const [activeCandle, setActiveCandle] = useState<Candle>();
+
+  const handleActiveCandle = useCallback((candle: Candle) => {
+    setActiveCandle(candle);
+  }, []);
+
+  useEffect(() => {
+    if (Array.exists(coin?.candles)) {
+      setActiveCandle(coin?.candles[0]);
+    }
+  }, [coin]);
 
   return (
     <S.Root>
@@ -14,14 +33,19 @@ export default function AIReport() {
         <S.Title>AI Report</S.Title>
       </S.Header>
       <S.Body>
-        <S.Banner>
-          <S.Coin>비트 코인</S.Coin>
-          <S.Actions>
-            {candles.map((candle) => (
-              <span key={candle.id}>{candle.type}</span>
-            ))}
-          </S.Actions>
-        </S.Banner>
+        {coin !== undefined && (
+          <S.Banner>
+            <S.Coin>{CoinKR[coin.name]}</S.Coin>
+            <CandleSelector
+              candles={coin.candles}
+              onClick={handleActiveCandle}
+              activeCandle={activeCandle}
+            />
+          </S.Banner>
+        )}
+        {activeCandle !== undefined && (
+          <ChartComparison candle={activeCandle} />
+        )}
       </S.Body>
     </S.Root>
   );
