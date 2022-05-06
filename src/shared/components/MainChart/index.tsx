@@ -11,81 +11,41 @@ import {
   CandlestickSeries,
   CrossHairCursor,
   OHLCTooltip,
+  BarSeries,
   mouseBasedZoomAnchor,
   XAxis,
   YAxis,
   EdgeIndicator,
   MouseCoordinateX,
   MouseCoordinateY,
-  withDeviceRatio,
-  withSize,
 } from "react-financial-charts";
-import isEqual from "react-fast-compare";
 
 import * as S from "./Styles";
 import { color } from "shared/utils/styles";
-
-interface Row {
-  date: Date;
-  datetime: string;
-  open: number;
-  high: number;
-  low: number;
-  close: number;
-  volume: number;
-}
-
-interface Criterion {
-  current_end: Date;
-  current_start: Date;
-  find_end: Date;
-  find_start: Date;
-}
-
-const candleChartExtents = (row: Row) => {
-  return [row.high, row.low];
-};
-
-const yEdgeIndicator = (row: Row) => {
-  return row.close;
-};
-
-const barChartExtents = (row: Row) => {
-  return row.volume;
-};
-
-const volumeColor = (row: Row) => {
-  return row.close > row.open
-    ? "rgba(38, 166, 154, 0.3)"
-    : "rgba(239, 83, 80, 0.3)";
-};
-
-const volumeSeries = (data) => {
-  return data.volume;
-};
-
-const margin = { left: 10, right: 80, top: 20, bottom: 20 };
-const minHeight = 350;
+import { OHLCV } from "shared/types";
 
 export interface MainChartProps {
-  rows: Array<Row>;
-  end: string;
-  start: string;
+  ohlcvs: OHLCV[];
+  start?: Date;
+  end?: Date;
 }
 
-const MainChart = ({ rows, end, start }: MainChartProps) => {
+const MainChart = ({ ohlcvs, end, start }: MainChartProps) => {
   const ratio = 1;
-  const width = 840;
-  const height = 500;
+  const width = 760;
+  const height = 344;
   const dateTimeFormat = "%y-%m-%d";
+  // const timeDisplayFormat = timeFormat(dateTimeFormat);
   const timeDisplayFormat = timeFormat(dateTimeFormat);
   const pricesDisplayFormat = format("");
 
-  const openCloseColor = (row: Row) =>
-    row.close > row.open ? color.green500 : color.red500;
+  const openCloseColor = (ohlcv: OHLCV) =>
+    ohlcv.close > ohlcv.open ? color.green500 : color.red500;
 
   const xScaleProvider =
-    discontinuousTimeScaleProviderBuilder().inputDateAccessor((d) => d.date);
+    discontinuousTimeScaleProviderBuilder().inputDateAccessor(
+      (d) => new Date(d.datetime)
+    );
 
   const ema12 = ema()
     .id(1)
@@ -105,17 +65,21 @@ const MainChart = ({ rows, end, start }: MainChartProps) => {
 
   const elder = elderRay();
 
-  const calculatedData = elder(ema26(ema12(rows)));
+  const calculatedData = elder(ema26(ema12(ohlcvs)));
 
   const { data, xScale, xAccessor, displayXAccessor } =
     xScaleProvider(calculatedData);
 
-  const findMax = xAccessor(data.find((d) => d.datetime.split(" ")[0] === end));
-  const findMin = xAccessor(
-    data.find((d) => d.datetime.split(" ")[0] === start)
-  );
+  // const findMax = xAccessor(data.find((d) => d.datetime.split(" ")[0] === end));
+  // const findMin = xAccessor(
+  //   data.find((d) => d.datetime.split(" ")[0] === start)
+  // );
 
-  const xExtents = [findMin - 5, findMax + 5];
+  // const xExtents = [findMin - 5, findMax + 5];
+
+  const max = xAccessor(data[data.length - 1]);
+  const min = xAccessor(data[Math.max(0, data.length - 100)]);
+  const xExtents = [min, max + 5];
 
   const gridHeight = height - margin.top - margin.bottom;
 
@@ -141,14 +105,14 @@ const MainChart = ({ rows, end, start }: MainChartProps) => {
         disableInteraction={false}
         zoomAnchor={mouseBasedZoomAnchor}
       >
-        {/* <Chart
+        <Chart
           id={2}
           height={barChartHeight}
           origin={barChartOrigin}
           yExtents={barChartExtents}
         >
           <BarSeries fillStyle={volumeColor} yAccessor={volumeSeries} />
-        </Chart> */}
+        </Chart>
         <Chart id={3} height={chartHeight} yExtents={candleChartExtents}>
           <CandlestickSeries
             fill={openCloseColor}
@@ -186,10 +150,28 @@ const MainChart = ({ rows, end, start }: MainChartProps) => {
   );
 };
 
-export default withSize({
-  style: {
-    width: "100%",
-    height: "500",
-    minHeight,
-  },
-})(withDeviceRatio()(memo(MainChart, isEqual)));
+const candleChartExtents = (ohlcv: OHLCV) => {
+  return [ohlcv.high, ohlcv.low];
+};
+
+const yEdgeIndicator = (ohlcv: OHLCV) => {
+  return ohlcv.close;
+};
+
+const barChartExtents = (ohlcv: OHLCV) => {
+  return ohlcv.volume;
+};
+
+const volumeColor = (ohlcv: OHLCV) => {
+  return ohlcv.close > ohlcv.open
+    ? "rgba(38, 166, 154, 0.3)"
+    : "rgba(239, 83, 80, 0.3)";
+};
+
+const volumeSeries = (ohlcv: OHLCV) => {
+  return ohlcv.volume;
+};
+
+const margin = { left: 10, right: 80, top: 20, bottom: 20 };
+
+export default memo(MainChart);
