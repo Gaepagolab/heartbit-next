@@ -13,7 +13,7 @@ export const color = {
   textWhite: "#ffffff",
   textMedium: "#8D97B1",
   textDarkBlue: "#6C789A",
-  textDark: "#48516C",
+  textDark: "#454B53",
   textDarkest: "#161E28",
 
   backgroundLight: "#293545",
@@ -24,6 +24,8 @@ export const color = {
   borderDark: "#858d9e",
   borderLightest: "#EBECF1",
   borderLight: "#dee0e5",
+
+  primary: "#11FFC6",
 };
 
 export const size = {
