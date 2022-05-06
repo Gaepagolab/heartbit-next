@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { mixin, color, font } from "shared/utils/styles";
 
@@ -35,5 +35,3 @@ export const Coin = styled.div`
   ${font.size(24)}
   line-height: 35px;
 `;
-
-export const Actions = styled.div``;

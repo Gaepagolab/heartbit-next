@@ -24,56 +24,40 @@ import isEqual from "react-fast-compare";
 
 import * as S from "./Styles";
 import { color } from "shared/utils/styles";
+import { OHLCV } from "../../types";
 
-interface Row {
-  date: Date;
-  datetime: string;
-  open: number;
-  high: number;
-  low: number;
-  close: number;
-  volume: number;
-}
-
-interface Criterion {
-  current_end: Date;
-  current_start: Date;
-  find_end: Date;
-  find_start: Date;
-}
-
-const candleChartExtents = (row: Row) => {
-  return [row.high, row.low];
+const candleChartExtents = (ohlcv: OHLCV) => {
+  return [ohlcv.high, ohlcv.low];
 };
 
-const yEdgeIndicator = (row: Row) => {
-  return row.close;
+const yEdgeIndicator = (ohlcv: OHLCV) => {
+  return ohlcv.close;
 };
 
-const barChartExtents = (row: Row) => {
-  return row.volume;
+const barChartExtents = (ohlcv: OHLCV) => {
+  return ohlcv.volume;
 };
 
-const volumeColor = (row: Row) => {
-  return row.close > row.open
+const volumeColor = (ohlcv: OHLCV) => {
+  return ohlcv.close > ohlcv.open
     ? "rgba(38, 166, 154, 0.3)"
     : "rgba(239, 83, 80, 0.3)";
 };
 
-const volumeSeries = (data) => {
-  return data.volume;
+const volumeSeries = (ohlcv: OHLCV) => {
+  return ohlcv.volume;
 };
 
 const margin = { left: 10, right: 80, top: 20, bottom: 20 };
 const minHeight = 350;
 
 export interface MainChartProps {
-  rows: Array<Row>;
-  end: string;
-  start: string;
+  ohlcvs: Array<OHLCV>;
+  start: Date;
+  end: Date;
 }
 
-const MainChart = ({ rows, end, start }: MainChartProps) => {
+const MainChart = ({ ohlcvs, end, start }: MainChartProps) => {
   const ratio = 1;
   const width = 840;
   const height = 500;
@@ -81,8 +65,8 @@ const MainChart = ({ rows, end, start }: MainChartProps) => {
   const timeDisplayFormat = timeFormat(dateTimeFormat);
   const pricesDisplayFormat = format("");
 
-  const openCloseColor = (row: Row) =>
-    row.close > row.open ? color.green500 : color.red500;
+  const openCloseColor = (ohlcv: OHLCV) =>
+    ohlcv.close > ohlcv.open ? color.green500 : color.red500;
 
   const xScaleProvider =
     discontinuousTimeScaleProviderBuilder().inputDateAccessor((d) => d.date);
@@ -105,7 +89,7 @@ const MainChart = ({ rows, end, start }: MainChartProps) => {
 
   const elder = elderRay();
 
-  const calculatedData = elder(ema26(ema12(rows)));
+  const calculatedData = elder(ema26(ema12(ohlcvs)));
 
   const { data, xScale, xAccessor, displayXAccessor } =
     xScaleProvider(calculatedData);
