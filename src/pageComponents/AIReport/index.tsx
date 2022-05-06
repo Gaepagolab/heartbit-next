@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
+import useSWR from "swr";
 
 import * as S from "./Styles";
 import { Candle, Coin } from "shared/types";
-import useFetch from "shared/hooks/useFetch";
+
 import { API_SERVER_ENDPOINT } from "shared/constants/env";
 import ChartComparison from "./ChartComparison";
 import { CoinKR } from "../../shared/constants/coin";
@@ -11,9 +12,7 @@ import CandleSelector from "./CandleSelector";
 const PROTOTYPE_COIN = "BTC";
 
 export default function AIReport() {
-  const { data: coin, error } = useFetch<Coin>(
-    `${API_SERVER_ENDPOINT}/coins/${PROTOTYPE_COIN}`
-  );
+  const { data: coin, error } = useSWR<Coin>(`/coins/${PROTOTYPE_COIN}`);
 
   const [activeCandle, setActiveCandle] = useState<Candle>();
 
