@@ -57,7 +57,12 @@ const WhaleTradings: FC<Props> = () => {
     <Panel
       title="실시간 고래 거래체결"
       renderSelector={() => (
-        <ButtonsTab width="116px" height="24px" items={tabItems} />
+        <ButtonsTab
+          width="116px"
+          height="24px"
+          items={tabItems}
+          onClick={() => null}
+        />
       )}
     >
       <Table>
