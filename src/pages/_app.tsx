@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import { AppProps } from "next/app";
 import { RecoilRoot } from "recoil";
 
+import SwrConfig from "core/providers/SWRConfig";
 import NormalizeStyles from "core/styles/NormalizeStyles";
 import BaseStyles from "core/styles/BaseStyles";
 import "core/styles/fontStyles.css";
@@ -26,10 +27,12 @@ export default function HeartbitApp({
   const getLayout = Page.getLayout || withDefaultLayout;
 
   return (
-    <RecoilRoot initializeState={recoilInitializer}>
-      <NormalizeStyles />
-      <BaseStyles />
-      {getLayout(<Page {...pageProps} />)}
-    </RecoilRoot>
+    <SwrConfig>
+      <RecoilRoot initializeState={recoilInitializer}>
+        <NormalizeStyles />
+        <BaseStyles />
+        {getLayout(<Page {...pageProps} />)}
+      </RecoilRoot>
+    </SwrConfig>
   );
 }
