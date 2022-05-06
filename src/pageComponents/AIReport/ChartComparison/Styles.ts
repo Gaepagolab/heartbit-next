@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { font } from "shared/utils/styles";
+import { color, font } from "shared/utils/styles";
 
 export const Root = styled.div`
   display: grid;
@@ -17,4 +17,9 @@ export const ChartType = styled.h3`
   line-height: 29px;
   margin-bottom: 54px;
   padding-left: 16px;
+`;
+
+export const Error = styled.div`
+  ${font.size(14)}
+  color: ${color.red500};
 `;

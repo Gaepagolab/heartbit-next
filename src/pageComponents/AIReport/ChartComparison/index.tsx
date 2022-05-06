@@ -3,8 +3,9 @@ import useSWR from "swr";
 import moment from "moment";
 
 import * as S from "./Styles";
-import { Candle, CandleType, OHLCV } from "shared/types";
 import { MainChart } from "shared/components";
+import { Candle, CandleType, OHLCV } from "shared/types";
+
 import { CandleTypeAmount, CandleTypeUnit } from "shared/constants/candle";
 import { enumToArray } from "shared/utils/convert";
 import { CHART_TYPE, CHART_TYPE_KR } from "shared/constants/chart";
@@ -26,27 +27,35 @@ function OHLCVChart({ candle, type }: { candle: Candle; type: CHART_TYPE }) {
   const extraDuration = 2000;
   const candleEnum = enumToArray(CandleType).find((c) => c === candle.type);
 
-  const extendedFrom = moment(candle.result[`${type}Start`]).subtract(
+  const start = candle.result[`${type}Start`];
+  const end = candle.result[`${type}End`];
+
+  const extendedFrom = moment(start).subtract(
     CandleTypeAmount[candleEnum] * extraDuration,
     CandleTypeUnit[candleEnum]
   );
-  const extendedTo = moment(candle.result[`${type}End`]).add(
+  const extendedTo = moment(end).add(
     CandleTypeAmount[candleEnum] * extraDuration,
     CandleTypeUnit[candleEnum]
   );
 
   const { data: ohlcvs, error } = useSWR<OHLCV[]>(
-    `/ohlcvs?${qs.stringify({
-      candleId: candle.id,
-      from: extendedFrom.format(),
-      to: extendedTo.format(),
-    })}`
+    [start, end].every((d) => d !== null)
+      ? `/ohlcvs?${qs.stringify({
+          candleId: candle.id,
+          from: extendedFrom.format(),
+          to: extendedTo.format(),
+        })}`
+      : null
   );
 
   return (
     <S.ChartWrapper>
       <S.ChartType>{CHART_TYPE_KR[type]}</S.ChartType>
-      {Array.exists(ohlcvs) && <MainChart ohlcvs={ohlcvs} />}
+      {Array.exists(ohlcvs) && (
+        <MainChart ohlcvs={ohlcvs} start={start} end={end} />
+      )}
+      {error !== undefined && <S.Error>{JSON.stringify(error)}</S.Error>}
     </S.ChartWrapper>
   );
 }
