@@ -21,4 +21,12 @@ export enum CandleType {
 export interface Candle extends AbstractType {
   type: CandleType;
   ohlcvs?: any[];
+  result?: Result;
+}
+
+export interface Result extends AbstractType {
+  currentEnd: Date;
+  currentStart: Date;
+  findEnd?: Date;
+  findStart?: Date;
 }
