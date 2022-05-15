@@ -24,6 +24,7 @@
     "react-financial-charts": "1.0.0-alpha.16",
     "react-google-login": "^5.2.2",
     "react-icons": "^4.2.0",
+    "react-loading": "^2.0.3",
     "recoil": "^0.4.1",
     "socket.io-client": "2.0.2",
     "styled-components": "^5.3.1",
