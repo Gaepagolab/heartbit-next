@@ -3,7 +3,7 @@ import useSWR from "swr";
 import moment from "moment";
 
 import * as S from "./Styles";
-import { MainChart } from "shared/components";
+import { MainChart, Loading } from "shared/components";
 import { Candle, CandleType, OHLCV } from "shared/types";
 
 import { CandleTypeAmount, CandleTypeUnit } from "shared/constants/candle";
@@ -52,6 +52,7 @@ function OHLCVChart({ candle, type }: { candle: Candle; type: CHART_TYPE }) {
   return (
     <S.ChartWrapper>
       <S.ChartType>{CHART_TYPE_KR[type]}</S.ChartType>
+      {ohlcvs === undefined && <Loading />}
       {Array.exists(ohlcvs) && (
         <MainChart ohlcvs={ohlcvs} start={start} end={end} />
       )}

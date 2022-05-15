@@ -35,5 +35,6 @@ export default function withDefaultLayout(page: ReactElement) {
 const Root = styled.main``;
 const Page = styled.div`
   height: 100vh;
+  width: calc(100% - ${size.navigationWidth}px);
   margin-left: ${size.navigationWidth}px;
 `;

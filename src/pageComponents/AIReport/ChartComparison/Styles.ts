@@ -1,12 +1,17 @@
 import styled from "styled-components";
 
-import { color, font } from "shared/utils/styles";
+import { color, font, media, mixin } from "shared/utils/styles";
 
 export const Root = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 80px;
   margin-top: 56px;
+
+  ${media.medium} {
+    grid-template-columns: 1fr;
+    gap: 120px;
+  }
 `;
 
 export const ChartWrapper = styled.div``;

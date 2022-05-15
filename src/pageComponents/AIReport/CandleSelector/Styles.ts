@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-import { color, font, mixin } from "shared/utils/styles";
+import { color, font, media, mixin } from "shared/utils/styles";
 
 export const Root = styled.div`
   ${mixin.flexSet()}
@@ -15,11 +15,16 @@ export const CandleItem = styled.div<{ active: boolean }>`
   width: 80px;
   ${font.size(20)}
   ${font.bold}
-${mixin.clickable}
-color: ${color.textDark};
+  ${mixin.clickable}
+  color: ${color.textDark};
   line-height: 29px;
   border-radius: 12px;
   opacity: 0.5;
+
+  ${media.medium} {
+    width: 56px;
+    ${font.size(14)}
+  }
 
   ${(props) =>
     props.active &&

@@ -37,11 +37,11 @@ export type MainChartProps = {
   WithRatioProps;
 
 const axisStyles = {
-  strokeStyle: "#383E55", // Color.GRAY
+  strokeStyle: "#383E55", 
   strokeWidth: 2,
-  tickLabelFill: "#9EAAC7", // Color.LIGHT_GRAY
+  tickLabelFill: "#9EAAC7", 
   tickStrokeStyle: "#383E55",
-  gridLinesStrokeStyle: "rgba(56, 62, 85, 0.5)", // Color.GRAY w Opacity
+  gridLinesStrokeStyle: "rgba(56, 62, 85, 0.5)",
 };
 
 function MainChart({
