@@ -1,12 +1,13 @@
 import styled from "styled-components";
 
-import { color, font, media, mixin } from "shared/utils/styles";
+import { color, font, media } from "shared/utils/styles";
 
 export const Root = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 80px;
   margin-top: 56px;
+  min-height: 240px;
 
   ${media.medium} {
     grid-template-columns: 1fr;
@@ -14,7 +15,9 @@ export const Root = styled.div`
   }
 `;
 
-export const ChartWrapper = styled.div``;
+export const ChartWrapper = styled.div`
+  height: 100%;
+`;
 
 export const ChartType = styled.h3`
   ${font.size(20)}
@@ -28,3 +31,5 @@ export const Error = styled.div`
   ${font.size(14)}
   color: ${color.red500};
 `;
+
+export const Empty = styled.div``;

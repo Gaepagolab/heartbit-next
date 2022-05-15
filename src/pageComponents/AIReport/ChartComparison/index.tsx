@@ -17,8 +17,14 @@ interface ChartComparisonProps {
 export default function ChartComparison({ candle }: ChartComparisonProps) {
   return (
     <S.Root>
-      <OHLCVChart candle={candle} type={CHART_TYPE.CURRENT} />
-      <OHLCVChart candle={candle} type={CHART_TYPE.FIND} />
+      <S.ChartWrapper>
+        <S.ChartType>{CHART_TYPE_KR[CHART_TYPE.CURRENT]}</S.ChartType>
+        <OHLCVChart candle={candle} type={CHART_TYPE.CURRENT} />
+      </S.ChartWrapper>
+      <S.ChartWrapper>
+        <S.ChartType>{CHART_TYPE_KR[CHART_TYPE.FIND]}</S.ChartType>
+        <OHLCVChart candle={candle} type={CHART_TYPE.FIND} />
+      </S.ChartWrapper>
     </S.Root>
   );
 }
@@ -29,7 +35,7 @@ function OHLCVChart({ candle, type }: { candle: Candle; type: CHART_TYPE }) {
 
   const start = candle.result[`${type}Start`];
   const end = candle.result[`${type}End`];
-
+  console.log(start);
   const extendedFrom = moment(start).subtract(
     CandleTypeAmount[candleEnum] * extraDuration,
     CandleTypeUnit[candleEnum]
@@ -39,8 +45,10 @@ function OHLCVChart({ candle, type }: { candle: Candle; type: CHART_TYPE }) {
     CandleTypeUnit[candleEnum]
   );
 
+  const validToFetch = [start, end].every((d) => d !== null);
+
   const { data: ohlcvs, error } = useSWR<OHLCV[]>(
-    [start, end].every((d) => d !== null)
+    validToFetch
       ? `/ohlcvs?${qs.stringify({
           candleId: candle.id,
           from: extendedFrom.format(),
@@ -49,13 +57,12 @@ function OHLCVChart({ candle, type }: { candle: Candle; type: CHART_TYPE }) {
       : null
   );
 
+  if (!validToFetch) return <S.Empty>유사한 구간을 찾지 못하였습니다.</S.Empty>;
+  if (ohlcvs === undefined) return <Loading />;
+
   return (
     <S.ChartWrapper>
-      <S.ChartType>{CHART_TYPE_KR[type]}</S.ChartType>
-      {ohlcvs === undefined && <Loading />}
-      {Array.exists(ohlcvs) && (
-        <MainChart ohlcvs={ohlcvs} start={start} end={end} />
-      )}
+      {ohlcvs.exists() && <MainChart ohlcvs={ohlcvs} start={start} end={end} />}
       {error !== undefined && <S.Error>{JSON.stringify(error)}</S.Error>}
     </S.ChartWrapper>
   );
