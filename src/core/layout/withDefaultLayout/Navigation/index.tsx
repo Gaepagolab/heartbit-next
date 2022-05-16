@@ -31,7 +31,8 @@ const Navigation: FC = () => {
       <S.Body>
         {renderMenuItem(router, "트랜드", "BTC", "/")}
         {renderMenuItem(router, "Indicator", "trends", "/indicator")}
-        {renderMenuItem(router, "Defi/Cefi", "bank", "/defi-cefi")}
+        {/*{renderMenuItem(router, "Defi/Cefi", "bank", "/defi-cefi")}*/}
+        {renderMenuItem(router, "Defi/Cefi", "bank", "/finance")}
         {renderMenuItem(router, "AI 리포트", "report", "/ai-report")}
       </S.Body>
       <S.Footer>
