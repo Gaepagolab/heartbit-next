@@ -61,3 +61,16 @@ export const StyledButton = styled.button<{
   ${(props) => buttonVariants[props.variant]}
   ${(props) => buttonSizes[props.size]}
 `;
+
+
+export const commonStyledButton = styled.button`
+    border: none;
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+  
+    /* identical to box height */
+    align-items: center;
+    text-transform: none;
+    
+   
+`;

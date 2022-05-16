@@ -1,5 +1,6 @@
-import {ReactNode, useCallback} from "react";
+import {ReactNode} from "react";
 import styled from "styled-components";
+import * as S from "./Styles";
 
 export interface ButtonProps {
     children: ReactNode;
@@ -10,7 +11,7 @@ export interface ButtonProps {
 
 const Button = ({children,onClick, customStyle = '',className=''}:ButtonProps) => {
 
-    const StyledButton = styled(commonStyledButton)`
+    const StyledButton = styled(S.commonStyledButton)`
         ${customStyle}
     `;
 
@@ -20,17 +21,5 @@ const Button = ({children,onClick, customStyle = '',className=''}:ButtonProps) =
         </StyledButton>
     )
 }
-
-const commonStyledButton = styled.button`
-    border: none;
-    font-family: 'Noto Sans KR';
-    font-style: normal;
-  
-    /* identical to box height */
-    align-items: center;
-    text-transform: none;
-    
-   
-`;
 
 export default Button;

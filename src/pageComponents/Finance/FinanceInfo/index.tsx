@@ -1,14 +1,11 @@
-import { useEffect, useState } from "react";
-import styled from "styled-components";
+import * as S from "./Styles";
 
 import FinanceInfoItem from './financeInfoItem'
-
-
 
 const FinanceInfoList = ({financeInfoList}) => {
 
     return (
-        <Root>
+        <S.Root>
         {
           financeInfoList.map((financeInfo, index) => {
               return (
@@ -18,12 +15,8 @@ const FinanceInfoList = ({financeInfoList}) => {
               )
           })
         }
-       </Root>
+       </S.Root>
     )
 }
 
-const Root = styled.div`
-display: flex;
-flex-wrap:wrap;
-`;
 export default FinanceInfoList;

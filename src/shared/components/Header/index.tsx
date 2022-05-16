@@ -1,5 +1,6 @@
 import {ReactNode} from "react";
 import styled from "styled-components";
+import * as S from "./Styles";
 
 export interface headerProps {
      children: ReactNode;
@@ -8,7 +9,7 @@ export interface headerProps {
 
 const Header = ({children,customStyle}:headerProps) => {
 
-    const StyledHeader = styled(commonStyledHeader)`
+    const StyledHeader = styled(S.commonStyledHeader)`
         ${customStyle}
     `;
 
@@ -16,12 +17,5 @@ const Header = ({children,customStyle}:headerProps) => {
         <StyledHeader>{children}</StyledHeader>
     )
 }
-
- const commonStyledHeader = styled.header`
-        font-family: 'Noto Sans KR';
-        font-style: normal;
-        align-items: center;
-        text-transform: capitalize;
-`;
 
 export default Header;
