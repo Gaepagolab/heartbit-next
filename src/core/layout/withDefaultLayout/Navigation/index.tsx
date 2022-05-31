@@ -5,18 +5,17 @@ import Link from "next/link";
 import * as S from "./Styles";
 import AuthModal from "./AuthModal";
 import { Icon, IconType } from "shared/components";
+import { logout } from "shared/api/authenticate";
 
 import useAuthModal from "shared/hooks/useAuthModal";
 import useCurrentUser from "shared/hooks/useCurrentUser";
-
-import { logout } from "shared/api/authenticate";
 
 const Navigation: FC = () => {
   const router = useRouter();
   const { openModal } = useAuthModal();
   const [currentUser, setCurrentUser] = useCurrentUser();
 
-  const isLoggingIn = !!currentUser;
+  const isLoggingIn = currentUser !== null;
 
   const handleLogout = async () => {
     await logout();

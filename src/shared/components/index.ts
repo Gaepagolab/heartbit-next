@@ -28,3 +28,5 @@ export { default as ModalProps } from "./Modal";
 
 export { default as MainChart } from "./MainChart";
 export type { MainChartProps } from "./MainChart";
+
+export { default as Loading } from "./Loading";

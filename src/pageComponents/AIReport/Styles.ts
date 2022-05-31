@@ -1,9 +1,14 @@
 import styled, { css } from "styled-components";
 
-import { mixin, color, font } from "shared/utils/styles";
+import { mixin, color, font, media } from "shared/utils/styles";
 
 export const Root = styled.div`
   padding: 16px 32px;
+  width: 100%;
+
+  ${media.medium} {
+    padding: 16px 8px;
+  }
 `;
 
 export const Header = styled.header`
@@ -34,4 +39,8 @@ export const Coin = styled.div`
   ${font.bold}
   ${font.size(24)}
   line-height: 35px;
+
+  ${media.medium} {
+    ${font.size(18)}
+  }
 `;

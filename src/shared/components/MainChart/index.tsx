@@ -1,7 +1,6 @@
-import { memo } from "react";
+import { Component, memo } from "react";
 import { format } from "d3-format";
 import { timeFormat } from "d3-time-format";
-
 import {
   elderRay,
   ema,
@@ -18,33 +17,50 @@ import {
   EdgeIndicator,
   MouseCoordinateX,
   MouseCoordinateY,
+  withDeviceRatio,
+  withSize,
+  WithSizeProps,
+  WithRatioProps,
 } from "react-financial-charts";
 
-import * as S from "./Styles";
 import { color } from "shared/utils/styles";
 import { OHLCV } from "shared/types";
 
-export interface MainChartProps {
+export type MainChartProps = {
   ohlcvs: OHLCV[];
   start?: Date;
   end?: Date;
-}
+  priceFormat?: string;
+  dateTimeFormat?: string;
+  margin?: { top: number; bottom: number; left: number; right: number };
+} & WithSizeProps &
+  WithRatioProps;
 
-const MainChart = ({ ohlcvs, end, start }: MainChartProps) => {
-  const ratio = 1;
-  const width = 760;
-  const height = 344;
-  const dateTimeFormat = "%y-%m-%d";
-  // const timeDisplayFormat = timeFormat(dateTimeFormat);
+const axisStyles = {
+  strokeStyle: "#383E55", 
+  strokeWidth: 2,
+  tickLabelFill: "#9EAAC7", 
+  tickStrokeStyle: "#383E55",
+  gridLinesStrokeStyle: "rgba(56, 62, 85, 0.5)",
+};
+
+function MainChart({
+  ohlcvs,
+  end,
+  start,
+  width,
+  height,
+  ratio,
+  dateTimeFormat,
+  priceFormat,
+  margin,
+}: MainChartProps) {
+  const priceDispalyFormat = format(priceFormat);
   const timeDisplayFormat = timeFormat(dateTimeFormat);
-  const pricesDisplayFormat = format("");
-
-  const openCloseColor = (ohlcv: OHLCV) =>
-    ohlcv.close > ohlcv.open ? color.green500 : color.red500;
 
   const xScaleProvider =
     discontinuousTimeScaleProviderBuilder().inputDateAccessor(
-      (d) => new Date(d.datetime)
+      ({ datetime }) => new Date(datetime)
     );
 
   const ema12 = ema()
@@ -70,16 +86,18 @@ const MainChart = ({ ohlcvs, end, start }: MainChartProps) => {
   const { data, xScale, xAccessor, displayXAccessor } =
     xScaleProvider(calculatedData);
 
-  // const findMax = xAccessor(data.find((d) => d.datetime.split(" ")[0] === end));
-  // const findMin = xAccessor(
-  //   data.find((d) => d.datetime.split(" ")[0] === start)
-  // );
+  const findMin = xAccessor(
+    data.find(({ datetime }) => dateCompare(datetime, start))
+  );
+  const findMax = xAccessor(
+    data.find(({ datetime }) => dateCompare(datetime, end))
+  );
 
-  // const xExtents = [findMin - 5, findMax + 5];
+  const xExtents = [findMin - 5, findMax + 5];
 
   const max = xAccessor(data[data.length - 1]);
   const min = xAccessor(data[Math.max(0, data.length - 100)]);
-  const xExtents = [min, max + 5];
+  // const xExtents = [min, max + 5];
 
   const gridHeight = height - margin.top - margin.bottom;
 
@@ -90,65 +108,51 @@ const MainChart = ({ ohlcvs, end, start }: MainChartProps) => {
   const barChartOrigin = (_, h) => [0, h - barChartHeight - elderRayHeight];
 
   return (
-    <S.Root>
-      <ChartCanvas
-        height={height}
-        ratio={ratio}
-        width={width}
-        margin={margin}
-        data={data}
-        displayXAccessor={displayXAccessor}
-        seriesName="Data"
-        xScale={xScale}
-        xAccessor={xAccessor}
-        xExtents={xExtents}
-        disableInteraction={false}
-        zoomAnchor={mouseBasedZoomAnchor}
+    <ChartCanvas
+      height={height}
+      ratio={ratio}
+      width={width}
+      margin={margin}
+      data={data}
+      displayXAccessor={displayXAccessor}
+      seriesName="Data"
+      xScale={xScale}
+      xAccessor={xAccessor}
+      xExtents={xExtents}
+      disableInteraction={false}
+      zoomAnchor={mouseBasedZoomAnchor}
+    >
+      <Chart
+        id={2}
+        height={barChartHeight}
+        origin={barChartOrigin}
+        yExtents={barChartExtents}
       >
-        <Chart
-          id={2}
-          height={barChartHeight}
-          origin={barChartOrigin}
-          yExtents={barChartExtents}
-        >
-          <BarSeries fillStyle={volumeColor} yAccessor={volumeSeries} />
-        </Chart>
-        <Chart id={3} height={chartHeight} yExtents={candleChartExtents}>
-          <CandlestickSeries
-            fill={openCloseColor}
-            wickStroke={openCloseColor}
-          />
-          <XAxis
-            showGridLines
-            tickLabelFill={color.textWhite}
-            gridLinesStrokeStyle={color.textMedium}
-          />
-          <MouseCoordinateX displayFormat={timeDisplayFormat} />
-          <YAxis
-            showGridLines
-            tickLabelFill={color.textWhite}
-            gridLinesStrokeStyle={color.textDark}
-            tickFormat={pricesDisplayFormat}
-          />
-          <MouseCoordinateY
-            rectWidth={margin.right}
-            displayFormat={pricesDisplayFormat}
-          />
-          <EdgeIndicator
-            itemType="last"
-            rectWidth={margin.right}
-            fill={openCloseColor}
-            lineStroke={openCloseColor}
-            displayFormat={pricesDisplayFormat}
-            yAccessor={yEdgeIndicator}
-          />
-          <OHLCTooltip origin={[8, 16]} textFill={color.textWhite} />
-          <CrossHairCursor snapX={false} />
-        </Chart>
-      </ChartCanvas>
-    </S.Root>
+        <BarSeries fillStyle={volumeColor} yAccessor={volumeSeries} />
+      </Chart>
+      <Chart id={3} height={chartHeight} yExtents={candleChartExtents}>
+        <CandlestickSeries fill={openCloseColor} wickStroke={openCloseColor} />
+        <XAxis showGridLines {...axisStyles} />
+        <MouseCoordinateX displayFormat={timeDisplayFormat} />
+        <YAxis showGridLines tickFormat={priceDispalyFormat} {...axisStyles} />
+        <MouseCoordinateY
+          rectWidth={margin.right}
+          displayFormat={priceDispalyFormat}
+        />
+        <EdgeIndicator
+          itemType="last"
+          rectWidth={margin.right}
+          fill={openCloseColor}
+          lineStroke={openCloseColor}
+          displayFormat={priceDispalyFormat}
+          yAccessor={yEdgeIndicator}
+        />
+        <OHLCTooltip origin={[8, 16]} textFill={openCloseColor} />
+        <CrossHairCursor snapX={false} />
+      </Chart>
+    </ChartCanvas>
   );
-};
+}
 
 const candleChartExtents = (ohlcv: OHLCV) => {
   return [ohlcv.high, ohlcv.low];
@@ -162,16 +166,37 @@ const barChartExtents = (ohlcv: OHLCV) => {
   return ohlcv.volume;
 };
 
+const openCloseColor = (ohlcv: OHLCV) =>
+  ohlcv.close > ohlcv.open ? color.green500 : color.red500;
+
 const volumeColor = (ohlcv: OHLCV) => {
-  return ohlcv.close > ohlcv.open
-    ? "rgba(38, 166, 154, 0.3)"
-    : "rgba(239, 83, 80, 0.3)";
+  return ohlcv.close > ohlcv.open ? `${color.green500}50` : `${color.red500}50`;
 };
 
 const volumeSeries = (ohlcv: OHLCV) => {
   return ohlcv.volume;
 };
 
-const margin = { left: 10, right: 80, top: 20, bottom: 20 };
+const dateCompare = (date1: Date, date2: Date) =>
+  new Date(date1).getTime() === new Date(date2).getTime();
 
-export default memo(MainChart);
+MainChart.defaultProps = {
+  dateTimeFormat: "%d %b '%y",
+  priceFormat: ".2f",
+  margin: { left: 10, right: 80, top: 20, bottom: 20 },
+  width: 0,
+  height: 0,
+  ratio: 0,
+};
+
+class MainChartClassComponent extends Component<MainChartProps> {
+  render() {
+    return <MainChart {...this.props} />;
+  }
+}
+
+export default memo(
+  withSize({ style: { minHeight: 280, maxHeight: 344 } })(
+    withDeviceRatio()(MainChartClassComponent)
+  )
+);
