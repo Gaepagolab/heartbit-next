@@ -3,36 +3,34 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 });
 
 module.exports = withBundleAnalyzer({
-  target: "serverless",
   env: {
     SOCKET_SERVER_ENDPOINT: process.env.SOCKET_SERVER_ENDPOINT,
+    GOOGLE_AUTH_CLIENT_ID: process.env.GOOGLE_AUTH_CLIENT_ID,
+    API_SERVER_ENDPOINT: process.env.API_SERVER_ENDPOINT,
   },
 
-  webpack(conf) {
-    conf.module.rules.push({
+  webpack(config, { dev, webpack }) {
+    config.module.rules.push({
       test: /\.svg$/,
-      use: [
-        {
-          loader: "@svgr/webpack",
-          options: {
-            svgoConfig: {
-              plugins: [
-                {
-                  // Enable figma's wrong mask-type attribute work
-                  removeRasterImages: false,
-                  removeStyleElement: false,
-                  removeUnknownsAndDefaults: false,
-                  // Enable svgr's svg to fill the size
-                  removeViewBox: false,
-                },
-              ],
-            },
-          },
-        },
-      ],
+      use: ['@svgr/webpack', 'url-loader'],
     });
-    // 절대경로
-    conf.resolve.modules.push(__dirname);
-    return conf;
+
+    config.resolve.modules.push(__dirname);
+
+    return config;
   },
 });
+
+
+// safely ignore recoil warning messages in dev (triggered by HMR)
+function interceptStdout(text) {
+  if (text.includes('Duplicate atom key')) {
+    return '';
+  }
+  return text;
+}
+
+if (process.env.NODE_ENV === 'development') {
+  const intercept = require('intercept-stdout');
+  intercept(interceptStdout);
+}
